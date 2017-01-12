@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "demonstration/pyqt_window.py", line 18, in actionUpdate
+    y = eval(str(self.ui.lineEdit.text()));
+  File "<string>", line 0
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+Traceback (most recent call last):
+  File "demonstration/pyqt_window.py", line 18, in actionUpdate
+    y = eval(str(self.ui.lineEdit.text()));
+  File "<string>", line 0
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+fejl
+---------
+fejl
+---------
+fejl
+---------
