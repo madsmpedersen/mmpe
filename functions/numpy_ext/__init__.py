@@ -6,7 +6,7 @@ from mmpe.functions.numpy_ext import fourier_fit
 
 
 import numpy as np
-from mmpe.functions.geometric import rad, deg
+
 
 def nanstd(x):
     return [lambda x : np.nanstd(x), lambda x: np.nan][len(x) == 0](x)
@@ -151,8 +151,6 @@ def bin2(x, y=None, bins=10, npfunc=nanmean, return_empty_bins=True):
         bin_count = res[2]
         return [v[bin_count > 0] for v in res]
 
-def mean_deg(x):
-    return deg(np.arctan2(np.mean(np.sin(rad(np.ma.masked_invalid(x[:])))), np.mean(np.cos(rad(np.ma.masked_invalid(x[:]))))))
 
 #
 #digitized = numpy.digitize(data, bins)
