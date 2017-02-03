@@ -36,7 +36,7 @@ def beep(frq=2500, dur=50):
 
 
 
-
+ 
 class ScriptingWindow(QtInputUI):
 
     autosave_splitter = """
