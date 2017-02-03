@@ -45,7 +45,7 @@ class ScriptingWindow(QtInputUI):
 #===============================================================================
 """
 
-    autosave_filename = os.path.expanduser('~/.pdap/autosave.py')
+    autosave_filename = os.path.expanduser('~/.tmp/autosave.py')
     autosave_warning_shown = False
     handle_focus = False
     anchor = None
@@ -324,8 +324,18 @@ class ScriptingMainWindow(QtMainWindowLoader, ScriptingWindow, QtUI):
         self.close()
         return QtMainWindowLoader.closeEvent(self, *args, **kwargs)
 
+    def _actionExportPlugin(self):
+        #Auto implemented action handler
+        raise NotImplementedError
 
 
+class ScriptingController(object):
+    def __init__(self):
+        self.gui = ScriptingMainWindow(self, None)
+        self.scriptRunner = ScriptRunner(self, self.gui, None)
 
-
+if __name__=="__main__":
+    c = ScriptingController()
+    c.gui.start()
+    
 
