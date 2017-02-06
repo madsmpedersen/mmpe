@@ -1,2 +1,3 @@
 *.pyc
 /io/tests/x.py
+/algorithms/string_matching_cython.pyd
