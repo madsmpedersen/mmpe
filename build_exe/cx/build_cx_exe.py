@@ -336,8 +336,8 @@ def copy_imageformats():
     """
     from PyQt4 import QtCore
     import sys
-    app = QtCore.QCoreApplication(sys.argv)
-    qt_library_path = QtCore.QCoreApplication.libraryPaths()
+    app = QCoreApplication(sys.argv)
+    qt_library_path = QCoreApplication.libraryPaths()
 
 
     imageformats_path = None

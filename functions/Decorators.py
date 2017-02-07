@@ -4,8 +4,10 @@ Created on 24/04/2013
 @author: Mads M. Pedersen (mmpe@dtu.dk)
 '''
 
-from PyQt4 import QtCore
+
 import time
+
+from PyQt5.QtCore import QThread, pyqtSignal
 
 
 last_time = {}
@@ -28,11 +30,11 @@ def wait_for_last(f):
 
 
 
-class WaitThread(QtCore.QThread):
-    done = QtCore.pyqtSignal(object)
+class WaitThread(QThread):
+    done = pyqtSignal(object)
 
     def __init__(self, duration):
-        QtCore.QThread.__init__(self)
+        QThread.__init__(self)
         self.duration = duration
 
     def run(self):

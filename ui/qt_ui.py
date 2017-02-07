@@ -3,10 +3,11 @@ import os
 import sys
 import traceback
 
+from PyQt5.QtCore import Qt
+from qtpy import QtGui, QtCore
 from qtpy.QtGui import QCursor
 from qtpy.QtWidgets import QApplication, QCheckBox, QLineEdit, QDialog, \
     QPushButton, QFormLayout, QMainWindow, QLabel
-from qtpy import QtGui, QtCore
 from qtpy.QtWidgets import QMessageBox, QFileDialog, QInputDialog
 
 from mmpe.ui import OutputUI, InputUI, StatusUI, UI
@@ -16,6 +17,8 @@ from mmpe.ui.qt_progress_information import QtProgressInformation
 class QtOutputUI(OutputUI):
     show_traceback = False
 
+    def __init__(self, parent=None):
+        OutputUI.__init__(self, parent=parent)
 
 
 
@@ -25,8 +28,8 @@ class QtOutputUI(OutputUI):
         cursor = QApplication.overrideCursor()
         QApplication.restoreOverrideCursor()
         box_func()
-        if cursor and isinstance(cursor, QCursor) and cursor.shape() == QtCore.Qt.WaitCursor:
-            QApplication.setOverrideCursor(QCursor(QtCore.Qt.WaitCursor))
+        if cursor and isinstance(cursor, QCursor) and cursor.shape() == Qt.WaitCursor:
+            QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
         QApplication.processEvents()
 
 
@@ -250,7 +253,7 @@ class QtStatusUI(QtProgressInformation, StatusUI):
     def start_wait(self):
         """Changes mouse icon to waitcursor"""
         StatusUI.start_wait(self)
-        QApplication.setOverrideCursor(QCursor(QtCore.Qt.WaitCursor))
+        QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
 
     def end_wait(self):
         """Restores default mouse icon"""

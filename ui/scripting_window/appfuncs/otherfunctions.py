@@ -10,13 +10,8 @@ from mmpe.ui.scripting_window.ScriptingWindow import ScriptingWindow
 from mmpe.ui.scripting_window.ScriptRunner import ScriptRunner
 from mmpe.ui.scripting_window.script_function import ScriptFunction
 import inspect
-
-try: range = range; range = None
-except NameError: pass
-try: str = unicode; unicode = None
-except NameError: pass
 import numpy as np
-from PyQt4 import QtGui
+
 
 
 

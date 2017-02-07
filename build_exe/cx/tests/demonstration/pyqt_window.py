@@ -1,6 +1,6 @@
 import os
 
-from PyQt4 import QtGui
+
 from numpy import *
 
 from mmpe.build_exe.cx.tests.demonstration import PlotUI
@@ -16,9 +16,9 @@ class Plot(QtMainWindowLoader):
         QtMainWindowLoader.__init__(self, PlotUI)
         self.mpl = MatplotlibWidget()
         self.ui.mplcontainer.addWidget(self.mpl)
-        self.setWindowIcon(QtGui.QIcon('Pydap.ico'))
+        self.setWindowIcon(QIcon('Pydap.ico'))
         self.setWindowTitle("Test")
-        self.ui.labelimage.setPixmap(QtGui.QPixmap('DTU_logo.png'))
+        self.ui.labelimage.setPixmap(QPixmap('DTU_logo.png'))
         #globals()['test'] = None
 
     def actionUpdate(self):

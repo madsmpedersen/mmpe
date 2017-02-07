@@ -4,14 +4,19 @@ Created on 25/11/2015
 @author: MMPE
 '''
 
-from PyQt4 import QtGui
-import sys
-from mmpe.ui.qt_ui import QtUI
-from mmpe.QtGuiLoader.QtGuiLoader import QtGuiLoader, QtGuiApplication
 
-class RecentMenu(QtGui.QMenu):
+import sys
+
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QMenu, QAction, QMainWindow, QApplication
+
+from mmpe.QtGuiLoader.QtGuiLoader import QtGuiLoader, QtGuiApplication
+from mmpe.ui.qt_ui import QtUI
+
+
+class RecentMenu(QMenu):
     def __init__(self, parent, fileMenu, pos):
-        QtGui.QMenu.__init__(self, "Recent", parent)
+        QMenu.__init__(self, "Recent", parent)
         fileMenu.addMenu(self)
 
     def add(self, name):
@@ -26,7 +31,7 @@ class RecentInMenu(object):
         self.max = max
         self.qactions = []
         for i, recent in enumerate([r for r in self.parent.load_setting('recent_lst', "").split(";") if r], 1):
-            a = QtGui.QAction("%d: %s" % (i, recent), self.filemenu, triggered=(lambda r=recent : lambda :self.open_wrapper(r))())
+            a = QAction("%d: %s" % (i, recent), self.filemenu, triggered=(lambda r=recent : lambda :self.open_wrapper(r))())
             a.recent = recent
             self.qactions.append(a)
             self.filemenu.insertAction (self.next_element, a)
@@ -44,7 +49,7 @@ class RecentInMenu(object):
                 remove_action = a
                 break
 
-        a = QtGui.QAction("1: " + recent, self.filemenu, triggered=(lambda r=recent : lambda :self.open_wrapper(r))())
+        a = QAction("1: " + recent, self.filemenu, triggered=(lambda r=recent : lambda :self.open_wrapper(r))())
         a.recent = recent
         self.filemenu.insertAction (self.next_element, a)
         self.qactions.insert(0, a)
@@ -64,20 +69,20 @@ class RecentInMenu(object):
             self.filemenu.removeAction(a)
 
 
-class TestMainWindow(QtGui.QMainWindow, QtGuiApplication, QtUI):
+class TestMainWindow(QMainWindow, QtGuiApplication, QtUI):
     def __init__(self, *args, **kwargs):
-        QtGui.QMainWindow.__init__(self, *args, **kwargs)
+        QMainWindow.__init__(self, *args, **kwargs)
         QtGuiApplication.__init__(self, self)
         QtUI.__init__(self, self)
 
 
         self.menubar = self.menuBar()
         self.fileMenu = self.menubar.addMenu('&File')
-        openAction = QtGui.QAction(QtGui.QIcon('open.png'), '&Open...', self)
+        openAction = QAction(QIcon('open.png'), '&Open...', self)
         openAction.setShortcut('Ctrl+O')
         openAction.setStatusTip('Open...')
         openAction.triggered.connect(self.actionOpen)
-        exitAction = QtGui.QAction("&Exit", self, shortcut='Ctrl+Q', statusTip='Exit', triggered=app.exit)
+        exitAction = QAction("&Exit", self, shortcut='Ctrl+Q', statusTip='Exit', triggered=app.exit)
         self.fileMenu.addAction(openAction)
         self.fileMenu.addSeparator()
         sep = self.fileMenu.addSeparator()
@@ -99,6 +104,6 @@ class TestMainWindow(QtGui.QMainWindow, QtGuiApplication, QtUI):
 
 
 if __name__ == "__main__":
-    app = QtGui.QApplication(sys.argv)
+    app = QApplication(sys.argv)
     mainWindow = TestMainWindow()
     app.exec_()
