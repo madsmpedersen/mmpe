@@ -6,7 +6,10 @@ Created on 19/09/2014
 import unittest
 from mmpe.io.mysql import MySqlReader
 from mmpe.ui.qt_ui import QtInputUI
-from mmpe.io.unit_test import x
+try:
+    import x
+except: 
+    x=None
 import multiprocessing
 import time
 
@@ -21,19 +24,22 @@ class Test(unittest.TestCase):
 
 
     def testRead(self):
-        with MySqlReader(server="10.40.20.10", database="poseidon", username='mmpe', password=x.password) as reader:
-            self.assertTrue("calmeans" in reader.tables())
+        if x:
+            with MySqlReader(server="10.40.20.10", database="poseidon", username='mmpe', password=x.password) as reader:
+                self.assertTrue("calmeans" in reader.tables())
 
     def testRead2(self):
-        reader = MySqlReader(server="10.40.20.10", database="poseidon", username='mmpe', password=x.password)
-        reader.open()
-        self.assertTrue("calmeans" in reader.tables())
-        reader.close()
+        if x:
+            reader = MySqlReader(server="10.40.20.10", database="poseidon", username='mmpe', password=x.password)
+            reader.open()
+            self.assertTrue("calmeans" in reader.tables())
+            reader.close()
 
 
     def testPoolRead(self):
-        p = multiprocessing.Pool()
-        p.map_async(task, range(500))
+        if x:
+            p = multiprocessing.Pool()
+            p.map_async(task, range(500))
 
 
 #    def testShape(self):
