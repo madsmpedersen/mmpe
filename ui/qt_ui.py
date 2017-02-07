@@ -1,11 +1,16 @@
 
 import os
-from PyQt4 import QtGui, QtCore
-from PyQt4.QtGui import QMessageBox, QFileDialog, QInputDialog
-from mmpe.ui.qt_progress_information import QtProgressInformation
 import sys
 import traceback
+
+from qtpy.QtGui import QCursor
+from qtpy.QtWidgets import QApplication, QCheckBox, QLineEdit, QDialog, \
+    QPushButton, QFormLayout, QMainWindow, QLabel
+from qtpy import QtGui, QtCore
+from qtpy.QtWidgets import QMessageBox, QFileDialog, QInputDialog
+
 from mmpe.ui import OutputUI, InputUI, StatusUI, UI
+from mmpe.ui.qt_progress_information import QtProgressInformation
 
 
 class QtOutputUI(OutputUI):
@@ -17,12 +22,12 @@ class QtOutputUI(OutputUI):
 
 
     def _show_box(self, box_func):
-        cursor = QtGui.QApplication.overrideCursor()
-        QtGui.QApplication.restoreOverrideCursor()
+        cursor = QApplication.overrideCursor()
+        QApplication.restoreOverrideCursor()
         box_func()
-        if cursor and isinstance(cursor, QtGui.QCursor) and cursor.shape() == QtCore.Qt.WaitCursor:
-            QtGui.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
-        QtGui.QApplication.processEvents()
+        if cursor and isinstance(cursor, QCursor) and cursor.shape() == QtCore.Qt.WaitCursor:
+            QApplication.setOverrideCursor(QCursor(QtCore.Qt.WaitCursor))
+        QApplication.processEvents()
 
 
 
@@ -59,8 +64,8 @@ class QtOutputUI(OutputUI):
 
 class QtInputUI(InputUI):
     def __init__(self, parent):
-        if QtGui.QApplication.instance() is None:
-            self.app = QtGui.QApplication(sys.argv)  # For unit testing
+        if QApplication.instance() is None:
+            self.app = QApplication(sys.argv)  # For unit testing
         self.parent = parent
 
     def get_confirmation(self, title, msg):
@@ -71,7 +76,7 @@ class QtInputUI(InputUI):
             def __init__(self, parent, title, msg):
                 super(DialogWithCheckBox, self).__init__()
 
-                self.checkbox = QtGui.QCheckBox()
+                self.checkbox = QCheckBox()
                 #Access the Layout of the MessageBox to add the Checkbox
                 layout = self.layout()
                 layout.addWidget(self.checkbox, 1, 2)
@@ -111,14 +116,14 @@ class QtInputUI(InputUI):
         return QInputDialog.getText(self.parent, title, msg, text=default)
 
     def get_username(self, msg="Username"):
-        username, ok = QtGui.QInputDialog.getText(None, "Enter username", msg)
+        username, ok = QInputDialog.getText(None, "Enter username", msg)
         if not ok:
             username = ""
         return str(username)
 
 
     def get_password(self, msg="Password"):
-        password, ok = QtGui.QInputDialog.getText(None, "Enter password", msg, QtGui.QLineEdit.Password)
+        password, ok = QInputDialog.getText(None, "Enter password", msg, QLineEdit.Password)
         if not ok:
             password = ""
         return str(password)
@@ -202,34 +207,34 @@ class QtInputUI(InputUI):
             self.save_setting("default_dir", r)
         return r
 
-class Login(QtGui.QDialog):
+class Login(QDialog):
         def __init__(self, username="", title="Log on as"):
-            QtGui.QDialog.__init__(self)
+            QDialog.__init__(self)
             self.setWindowTitle(title)
-            self.textName = QtGui.QLineEdit(username, self)
-            self.textPass = QtGui.QLineEdit(self)
-            self.textPass.setEchoMode(QtGui.QLineEdit.Password)
-            self.buttonLogin = QtGui.QPushButton('Login', self)
+            self.textName = QLineEdit(username, self)
+            self.textPass = QLineEdit(self)
+            self.textPass.setEchoMode(QLineEdit.Password)
+            self.buttonLogin = QPushButton('Login', self)
             self.buttonLogin.clicked.connect(self.accept)
-            layout = QtGui.QFormLayout(self)
-            layout.addRow(QtGui.QLabel("Username:"), self.textName)
-            layout.addRow(QtGui.QLabel("Password:"), self.textPass)
+            layout = QFormLayout(self)
+            layout.addRow(QLabel("Username:"), self.textName)
+            layout.addRow(QLabel("Password:"), self.textPass)
             layout.addWidget(self.buttonLogin)
 
-class HostLogin(QtGui.QDialog):
+class HostLogin(QDialog):
         def __init__(self, host="", username="", title='Host connection'):
-            QtGui.QDialog.__init__(self)
+            QDialog.__init__(self)
             self.setWindowTitle(title)
-            self.textHost = QtGui.QLineEdit(host, self)
-            self.textName = QtGui.QLineEdit(username, self)
-            self.textPass = QtGui.QLineEdit(self)
-            self.textPass.setEchoMode(QtGui.QLineEdit.Password)
-            self.buttonLogin = QtGui.QPushButton('Login', self)
+            self.textHost = QLineEdit(host, self)
+            self.textName = QLineEdit(username, self)
+            self.textPass = QLineEdit(self)
+            self.textPass.setEchoMode(QLineEdit.Password)
+            self.buttonLogin = QPushButton('Login', self)
             self.buttonLogin.clicked.connect(self.accept)
-            layout = QtGui.QFormLayout(self)
-            layout.addRow(QtGui.QLabel("Host:"), self.textHost)
-            layout.addRow(QtGui.QLabel("Username:"), self.textName)
-            layout.addRow(QtGui.QLabel("Password:"), self.textPass)
+            layout = QFormLayout(self)
+            layout.addRow(QLabel("Host:"), self.textHost)
+            layout.addRow(QLabel("Username:"), self.textName)
+            layout.addRow(QLabel("Password:"), self.textPass)
             layout.addWidget(self.buttonLogin)
 
 
@@ -245,32 +250,41 @@ class QtStatusUI(QtProgressInformation, StatusUI):
     def start_wait(self):
         """Changes mouse icon to waitcursor"""
         StatusUI.start_wait(self)
-        QtGui.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
+        QApplication.setOverrideCursor(QCursor(QtCore.Qt.WaitCursor))
 
     def end_wait(self):
         """Restores default mouse icon"""
         StatusUI.end_wait(self)
-        QtGui.QApplication.restoreOverrideCursor()
+        QApplication.restoreOverrideCursor()
 
 
 
 class QtUI(QtOutputUI, QtInputUI, QtStatusUI, UI):
-    def __init__(self, parent):
+    def __init__(self, parent=None):
+        if parent is None:
+            return
         QtStatusUI.__init__(self, parent)
         QtInputUI.__init__(self, parent)
         QtOutputUI.__init__(self, parent)
 
 
 if __name__ == "__main__":
-    class MW(QtGui.QMainWindow, QtUI):
+    class MW(QMainWindow, QtUI):
         def __init__(self, *args, **kwargs):
-            QtGui.QMainWindow.__init__(self, *args, **kwargs)
+            QMainWindow.__init__(self, *args, **kwargs)
             QtUI.__init__(self, self)
-
-    app = QtGui.QApplication(sys.argv)
+            
+        def mousePressEvent(self, *args, **kwargs):
+            import time
+            for i in self.progress_iterator(range(10)):
+                time.sleep(0.1)
+            return QMainWindow.mousePressEvent(self, *args, **kwargs)           
+                    
+    app = QApplication(sys.argv)
     mw = MW()
 
+    mw.show()
 
-    print (mw.get_confirmation_dontaskagain("title", "msg"))
+    #print (mw.get_confirmation_dontaskagain("title", "msg"))
 
     sys.exit(app.exec_())

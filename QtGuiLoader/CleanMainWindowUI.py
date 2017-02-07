@@ -7,15 +7,17 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt4 import QtCore, QtGui
+from qtpy.QtWidgets import QMenuBar, QStatusBar, QWidget
+from qtpy import QtCore
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        MainWindow.setCentralWidget(QtGui.QWidget(MainWindow))
-        self.menubar = QtGui.QMenuBar(MainWindow)
+        MainWindow.setCentralWidget(QWidget(MainWindow))
+        self.menubar = QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
         MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtGui.QStatusBar(MainWindow)
+        self.statusbar = QStatusBar(MainWindow)
         MainWindow.setStatusBar(self.statusbar)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 

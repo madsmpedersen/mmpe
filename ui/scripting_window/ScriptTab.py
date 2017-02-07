@@ -1,14 +1,13 @@
-from PyQt4 import QtGui, Qsci, QtCore
-from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QMessageBox, QTextEdit, QGridLayout, QWidget
-
-
 import os
+
+from qtpy.QtCore import Qt, QEvent
+from qtpy.QtWidgets import QMessageBox, QGridLayout, QWidget
+from qtpy.QtGui import QFont, QFontMetrics, QColor, QKeyEvent
+
+from Qsci import QsciScintilla, QsciLexerPython, QsciAPIs
 
 
 #from model.Simulation import *
-
-
 class ScriptTab(QWidget,):
     autocomplete_lst = []
 
@@ -59,7 +58,7 @@ class ScriptTab(QWidget,):
 
 
 
-        self.editor = Qsci.QsciScintilla()
+        self.editor = QsciScintilla()
 
 #        self.editor.cursorPositionChanged.connect(self.e)
 #        self.editor.copyAvailable.connect(self.e)
@@ -77,13 +76,13 @@ class ScriptTab(QWidget,):
             return  # When using PySide without QSciScintilla
 
         # define the font to use
-        font = QtGui.QFont()
+        font = QFont()
         font.setFamily("Consolas")
         font.setFixedPitch(True)
         font.setPointSize(10)
         # the font metrics here will help
         # building the margin width later
-        fm = QtGui.QFontMetrics(font)
+        fm = QFontMetrics(font)
 
         # set the default font of the self.editor
         # and take the same font for line numbers
@@ -98,27 +97,27 @@ class ScriptTab(QWidget,):
         self.editor.setTabWidth(4)
 
         # Folding visual : we will use boxes
-        self.editor.setFolding(Qsci.QsciScintilla.BoxedTreeFoldStyle)
+        self.editor.setFolding(QsciScintilla.BoxedTreeFoldStyle)
 
         self.editor.setAutoIndent(True)
 
         # Braces matching
-        self.editor.setBraceMatching(Qsci.QsciScintilla.SloppyBraceMatch)
+        self.editor.setBraceMatching(QsciScintilla.SloppyBraceMatch)
 
         # Editing line color
         self.editor.setCaretLineVisible(True)
-        self.editor.setCaretLineBackgroundColor(QtGui.QColor("#CDA869"))
+        self.editor.setCaretLineBackgroundColor(QColor("#CDA869"))
 
         # Margins colors
         # line numbers margin
-        self.editor.setMarginsBackgroundColor(QtGui.QColor("#333333"))
-        self.editor.setMarginsForegroundColor(QtGui.QColor("#CCCCCC"))
+        self.editor.setMarginsBackgroundColor(QColor("#333333"))
+        self.editor.setMarginsForegroundColor(QColor("#CCCCCC"))
 
         # folding margin colors (foreground,background)
-        self.editor.setFoldMarginColors(QtGui.QColor("#99CC66"), QtGui.QColor("#333300"))
+        self.editor.setFoldMarginColors(QColor("#99CC66"), QColor("#333300"))
 
         # Choose a lexer
-        self.lexer = Qsci.QsciLexerPython()
+        self.lexer = QsciLexerPython()
         self.lexer.setDefaultFont(font)
 
         # Set the length of the string before the editor tries to autocomplete
@@ -126,14 +125,14 @@ class ScriptTab(QWidget,):
         # But its set lower here to make the autocompletion more obvious
         self.editor.setAutoCompletionThreshold(1)
         # Tell the editor we are using a QsciAPI for the autocompletion
-        self.editor.setAutoCompletionSource(Qsci.QsciScintilla.AcsAPIs)
+        self.editor.setAutoCompletionSource(QsciScintilla.AcsAPIs)
 
         self.editor.setLexer(self.lexer)
-        self.editor.setCallTipsStyle(Qsci.QsciScintilla.CallTipsContext)
+        self.editor.setCallTipsStyle(QsciScintilla.CallTipsContext)
 
         # self.editor.setCallTipsVisible(0)
         # Create an API for us to populate with our autocomplete terms
-        self.api = Qsci.QsciAPIs(self.lexer)
+        self.api = QsciAPIs(self.lexer)
 
         # Compile the api for use in the lexer
         self.api.prepare()
@@ -239,7 +238,7 @@ class ScriptTab(QWidget,):
         if self.editor.__class__.__name__ == "LineTextWidget":
             return self.editor.edit.keyReleaseEvent(event)  # When using PySide without QSciScintilla
 
-        Qsci.QsciScintilla.keyPressEvent(self.editor, event)
+        QsciScintilla.keyPressEvent(self.editor, event)
 
         linenr, pos_in_line = self.editor.getCursorPosition()
         line = str(self.editor.text(linenr)[:pos_in_line])
@@ -275,8 +274,8 @@ class ScriptTab(QWidget,):
                     self.autocomplete_lst = lst
 
             self.editor.autoCompleteFromAll()
-            shift_event = QtGui.QKeyEvent(QtCore.QEvent.KeyPress, Qt.Key_Shift, Qt.NoModifier)
-            Qsci.QsciScintilla.keyPressEvent(self.editor, shift_event)  # show autocomplete list
+            shift_event = QKeyEvent(QEvent.KeyPress, Qt.Key_Shift, Qt.NoModifier)
+            QsciScintilla.keyPressEvent(self.editor, shift_event)  # show autocomplete list
 
 
 

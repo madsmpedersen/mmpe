@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '..\..\MMPE\mmpe\ui\scripting_window\SimpleScriptingWindowUI.ui'
+# Form implementation generated from reading ui file 'SimpleScriptingWindowUI.ui'
 #
-# Created: Tue Dec  8 09:16:23 2015
-#      by: PyQt4 UI code generator 4.9.6
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -49,7 +48,6 @@ class Ui_Form(object):
         self.layoutWidget = QtGui.QWidget(self.splitter_2)
         self.layoutWidget.setObjectName(_fromUtf8("layoutWidget"))
         self.gridLayout = QtGui.QGridLayout(self.layoutWidget)
-        self.gridLayout.setMargin(0)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.splitter = QtGui.QSplitter(self.layoutWidget)
         self.splitter.setOrientation(QtCore.Qt.Vertical)
@@ -58,7 +56,6 @@ class Ui_Form(object):
         self.verticalLayoutWidget = QtGui.QWidget(self.splitter)
         self.verticalLayoutWidget.setObjectName(_fromUtf8("verticalLayoutWidget"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout_2.setMargin(0)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
         self.tabWidget = QtGui.QTabWidget(self.verticalLayoutWidget)
         self.tabWidget.setDocumentMode(False)
@@ -68,7 +65,6 @@ class Ui_Form(object):
         self.verticalLayoutWidget_2 = QtGui.QWidget(self.splitter)
         self.verticalLayoutWidget_2.setObjectName(_fromUtf8("verticalLayoutWidget_2"))
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.verticalLayoutWidget_2)
-        self.verticalLayout_3.setMargin(0)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
         self.label_2 = QtGui.QLabel(self.verticalLayoutWidget_2)
         self.label_2.setObjectName(_fromUtf8("label_2"))
@@ -132,4 +128,14 @@ class Ui_Form(object):
         self.actionOpen.setText(_translate("Form", "Open", None))
         self.actionOpen.setToolTip(_translate("Form", "Open script", None))
         self.actionOpen.setShortcut(_translate("Form", "Ctrl+O", None))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtGui.QApplication(sys.argv)
+    Form = QtGui.QWidget()
+    ui = Ui_Form()
+    ui.setupUi(Form)
+    Form.show()
+    sys.exit(app.exec_())
 

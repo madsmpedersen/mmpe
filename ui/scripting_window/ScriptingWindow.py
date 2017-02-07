@@ -8,7 +8,7 @@ import traceback
 
 import PyQt4
 from PyQt4.QtCore import Qt, QUrl
-from PyQt4.QtGui import QMessageBox, QDialog, QFileDialog, QIcon, QApplication
+from qtpy.QtWidgets import QMessageBox, QDialog, QFileDialog, QIcon, QApplication
 #from mmpe.functions.exe_std_out import ExeStdOut
 from mmpe.QtGuiLoader import QtDialogLoader
 from mmpe.QtGuiLoader.QtGuiLoader import QtMainWindowLoader

@@ -1,6 +1,3 @@
-
-
-from PyQt4 import QtGui
 from mmpe.QtGuiLoader.QtGuiLoader import QtGuiApplication, QtMainWindowLoader
 from mmpe.ui.qt_ui import QtUI
 import sys

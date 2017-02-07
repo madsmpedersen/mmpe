@@ -18,7 +18,7 @@ Copyright © 2005 Florent Rougon, 2006 Darren Dale
 
 __version__ = "1.0.0"
 
-from PyQt4.QtGui import QSizePolicy
+from qtpy.QtWidgets import QSizePolicy
 from PyQt4.QtCore import QSize
 
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as Canvas
@@ -30,7 +30,7 @@ rcParams['font.size'] = 9
 
 class MatplotlibWidget(Canvas):
     """
-    MatplotlibWidget inherits PyQt4.QtGui.QWidget
+    MatplotlibWidget inherits qtpy.QtWidgets.QWidget
     and matplotlib.backend_bases.FigureCanvasBase
     
     Options: option_name (default_value)
@@ -99,7 +99,7 @@ class MatplotlibWidget(Canvas):
 #===============================================================================
 if __name__ == '__main__':
     import sys
-    from PyQt4.QtGui import QMainWindow, QApplication
+    from qtpy.QtWidgets import QMainWindow, QApplication
     from numpy import linspace
     
     class ApplicationWindow(QMainWindow):

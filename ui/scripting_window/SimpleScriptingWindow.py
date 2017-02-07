@@ -13,10 +13,9 @@ import inspect
 
 import time
 import traceback
-import PyQt4
-#
-from PyQt4.QtCore import Qt, QUrl
-from PyQt4.QtGui import QMessageBox, QDialog, QFileDialog, QIcon, QApplication
+from qtpy.QtCore import Qt, QUrl
+from qtpy.QtWidgets import QMessageBox, QDialog, QFileDialog, QApplication
+from qtpy.QtGui import QIcon
 from mmpe.QtGuiLoader import QtDialogLoader
 from mmpe.datastructures.Singleton import singleton
 from mmpe.ui.scripting_window import SimpleScriptingWindowUI as ScriptingWindowUI
@@ -317,8 +316,8 @@ class ScriptingMainWindow(QtMainWindowLoader, ScriptingWindow, QtUI):
         except: pass
 
         QtMainWindowLoader.__init__(self, module, self)
-        ScriptingWindow.__init__(self, controller, self, model)
         QtUI.__init__(self, self)
+        ScriptingWindow.__init__(self, controller, self, model)
 
     def closeEvent(self, *args, **kwargs):
         self.close()

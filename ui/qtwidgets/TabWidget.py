@@ -8,8 +8,8 @@ Created on 10/02/2014
 
 import sys
 
-from PyQt4 import QtCore, QtGui
-from PyQt4.QtGui import QTabWidget, QLabel
+from qtpy import QtCore, QtGui
+from qtpy.QtWidgets import QTabWidget, QLabel
 
 
 class TabWidget(QtGui.QTabWidget):
