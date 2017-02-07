@@ -7,7 +7,7 @@ import unittest
 from mmpe.io.mysql import MySqlReader
 from mmpe.ui.qt_ui import QtInputUI
 try:
-    import x
+    import x  # @UnresolvedImport
 except: 
     x=None
 import multiprocessing
