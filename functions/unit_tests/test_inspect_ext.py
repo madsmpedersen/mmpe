@@ -20,7 +20,7 @@ class Test(unittest.TestCase):
             self.assertTrue(cls in lst)
 
     def test_argument_string(self):
-        self.assertEqual(argument_string(np.interp), "(x, xp, fp, left=None, right=None)")
+        self.assertEqual(argument_string(np.interp), "(x, xp, fp, left=None, right=None, period=None)")
 
 
 

@@ -22,17 +22,17 @@ from mmpe.build_exe.cx.build_cx_exe import NUMPY, HDF5, SCIPY, PYQT4, MATPLOTLIB
 
 
 class Test_exe(unittest.TestCase):
+    pass
 
 
 
-
-    def test_exe(self):
-        if os.path.isdir("my_program_dist"):
-            shutil.rmtree("my_program_dist/")
-        import pandas
-
-        build_cx_exe.build_exe('my_program.py', "2.0.0", modules=[NUMPY, CTYPES], includes=["pandas"])
-        self.assertTrue(os.path.isfile("my_program_dist/exe.win32-2.7/my_program.exe"))
+#     def test_exe(self):
+#         if os.path.isdir("my_program_dist"):
+#             shutil.rmtree("my_program_dist/")
+#         import pandas
+# 
+#         build_cx_exe.build_exe('my_program.py', "2.0.0", modules=[NUMPY, CTYPES], includes=["pandas"])
+#         self.assertTrue(os.path.isfile("my_program_dist/exe.win32-2.7/my_program.exe"))
 
 
 

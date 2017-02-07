@@ -22,23 +22,21 @@ def iterative(A, b, x=None, decimal=7, max_iterations=1000):
     if x is None:
         x = np.zeros_like(b)
     last = np.ones_like(x) * 999999
-    last_diff = np.max(last) * 2
+#     last_diff = np.max(last) * 2
     precision = 10 ** -decimal
     for i in range(max_iterations):
         x = np.dot(B, x) + b_
         diff = np.max(np.abs(x - last))
-        print (i, diff, x)
+        #print (i, diff, x)
         if diff <= precision:
             return x
         #if diff > last_diff:
         #    raise ValueError("Does not converge")
         last = x
-        last_diff = diff
+#         last_diff = diff
     raise ValueError("Max iterations exceeded. Diff = %f" % diff)
 
 
-def bisect(func, bounds):
-    values = [func(b) for b in bounds]
 
 
 

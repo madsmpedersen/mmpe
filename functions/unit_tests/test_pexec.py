@@ -41,19 +41,19 @@ class Test(unittest.TestCase):
 #            self.assertEqual(err, "", cmd)
 
 
-    def test_pexec4(self):
-
-
-        #for path in [r'C:\program files (x86)/notepad++', 'C://program files (x86)/notepad++', r'C:\\program files (x86)/notepad++']:
-        path = 'c:\\program files (x86)/notepad++.exe'
-        ret, out, err, cmd = pexec([path])
-        #print (ret)
-        #print (out)
-        #print (cmd)
-        sys.stderr.write(err)
-        self.assertEqual(ret, 0, path)
-        self.assertEqual(out, "", path)
-        self.assertEqual(err, "", path)
+#     def test_pexec4(self):
+# 
+# 
+#         #for path in [r'C:\program files (x86)/notepad++', 'C://program files (x86)/notepad++', r'C:\\program files (x86)/notepad++']:
+#         path = 'echo "hello"'
+#         ret, out, err, cmd = pexec([path])
+#         #print (ret)
+#         #print (out)
+#         #print (cmd)
+#         sys.stderr.write(err)
+#         self.assertEqual(ret, 0, path)
+#         self.assertEqual(out, "", path)
+#         self.assertEqual(err, "", path)
 
 
 
