@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'SimpleScriptingWindowUI.ui'
+# Form implementation generated from reading ui file '.\mmpe\ui\scripting_window\SimpleScriptingWindowUI.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #

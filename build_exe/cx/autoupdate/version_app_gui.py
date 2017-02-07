@@ -22,10 +22,10 @@ class VersionApp(QtUI, QtMainWindowLoader):
         QtMainWindowLoader.__init__(self, ui_module)
         QtUI.__init__(self, parent=self)
         self.setWindowTitle("Version %d.%d.%d" % version)
-        from PyQt4 import QtGui
+        
 
         print (os.path.isfile('pydap.ico'))
-        ico = QtGui.QIcon('pydap.ico')
+        ico = QIcon('pydap.ico')
         print (ico)
         self.setWindowIcon(ico)
         print (self.windowIcon())

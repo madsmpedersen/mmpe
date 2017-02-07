@@ -29,9 +29,11 @@ import imp
 import inspect
 import os
 import sys
+
+from qtpy.QtCore import QSettings, QTimer, QEvent
+from qtpy import QtCore, QtWidgets
 import qtpy
 from qtpy.QtWidgets import QAction, QGridLayout, QApplication, QWidget, QDialog
-from qtpy import QtCore, QtWidgets
 from qtpy.QtWidgets import QMainWindow
 
 from mmpe.QtGuiLoader import CleanMainWindowUI
@@ -46,7 +48,7 @@ def pyqt_compile_func(ui_file, py_file):
 
 class QtGuiLoader(object):
 
-    def compile_ui(self, ui_module, recompile=True):
+    def compile_ui(self, ui_module, recompile=False):
         basename = os.path.relpath(os.path.splitext(ui_module.__file__)[0], os.getcwd())
         ui_file = basename + ".ui"
         py_file = basename + ".py"
@@ -57,12 +59,6 @@ class QtGuiLoader(object):
                 os.path.getsize(py_file) == 0 or \
                 recompile:
                 print ("compile %s > %s" % (ui_file, py_file))
-                exe_dir = os.path.dirname(sys.executable)
-
-                #ui_compile_func(ui_file, py_file)
-                #os.system("%s %s > %s" % (ui_compiler, ui_file, py_file))
-#                pyuic_path = os.path.join(os.path.dirname(sys.executable), 'Lib/site-packages/PyQt4/uic/pyuic.py')
-#                os.system("%s %s %s > %s" % (sys.executable, pyuic_path, ui_file, py_file))
                 pyqt_compile_func(ui_file, py_file)
         imp.reload(ui_module)
 
@@ -82,7 +78,7 @@ class QtGuiLoader(object):
                 setattr(action_receiver, name, action_wrapper(func))
 
             if hasattr(action_receiver, name):
-                QtCore.QObject.connect(action, QtCore.SIGNAL("triggered()"), getattr(action_receiver, name))
+                action.triggered.connect(getattr(action_receiver, name))
             elif not hasattr(action_receiver, "_" + name):
                 try:
                     source_file = inspect.getsourcefile(self.__class__)
@@ -109,9 +105,12 @@ class QtGuiLoader(object):
         else:
             self.ui_widget = root_widgets[-1]
             g = QGridLayout()
-            if isinstance(self, QtWidgetLoader):
-                g.setMargin(0)
-                g.setSpacing(0)
+            if qtpy.API=="pyqt5":
+                pass
+            else:
+                if isinstance(self, QtWidgetLoader):
+                    g.setMargin(0)
+                    g.setSpacing(0)
             widget.setLayout(g)
 
             g.addWidget(self.ui_widget)
@@ -131,11 +130,11 @@ class QtGuiApplication(object):
             self.compile_ui(ui_module)
 
     def save_settings(self):
-        settings = QtCore.QSettings("QtGuiApplication", "%s_%s" % (self.app_name, self.__class__.__name__))
+        settings = QSettings("QtGuiApplication", "%s_%s" % (self.app_name, self.__class__.__name__))
         settings.setValue(self.ui_module.__name__ + "/geometry", self.saveGeometry())
 
     def load_settings(self):
-        settings = QtCore.QSettings("QtGuiApplication", "%s_%s" % (self.app_name, self.__class__.__name__))
+        settings = QSettings("QtGuiApplication", "%s_%s" % (self.app_name, self.__class__.__name__))
         geometry = settings.value(self.ui_module.__name__ + "/geometry")
         try:
             geometry = geometry.toByteArray()
@@ -145,11 +144,11 @@ class QtGuiApplication(object):
             self.restoreGeometry(geometry)
 
     def save_setting(self, key, value):
-        settings = QtCore.QSettings("QtGuiApplication", "%s_%s" % (self.app_name, self.__class__.__name__))
+        settings = QSettings("QtGuiApplication", "%s_%s" % (self.app_name, self.__class__.__name__))
         settings.setValue(self.ui_module.__name__ + "/" + key, value)
 
     def load_setting(self, key, default_value=None):
-        settings = QtCore.QSettings("QtGuiApplication", "%s_%s" % (self.app_name, self.__class__.__name__))
+        settings = QSettings("QtGuiApplication", "%s_%s" % (self.app_name, self.__class__.__name__))
         setting = settings.value(self.ui_module.__name__ + "/" + key, default_value)
         try:
             setting = setting.toString()
@@ -158,7 +157,7 @@ class QtGuiApplication(object):
         return str(setting)
 
     def clear_settings(self):
-        settings = QtCore.QSettings("QtGuiApplication", "%s_%s" % (self.app_name, self.__class__.__name__))
+        settings = QSettings("QtGuiApplication", "%s_%s" % (self.app_name, self.__class__.__name__))
         settings.clear()
 
 
@@ -217,7 +216,7 @@ class QtMainWindowLoader(QtGuiLoader, QtGuiApplication, QMainWindow):
 
         self.show()
         if hasattr(self, "app"):
-            QtCore.QTimer().singleShot(100, self.post_initialize)
+            QTimer().singleShot(100, self.post_initialize)
             self.app.aboutToQuit.connect(self.cleanUp)
             self.app.exec_()
 
@@ -256,7 +255,7 @@ class QtMainWindowLoader(QtGuiLoader, QtGuiApplication, QMainWindow):
         self.save_settings()
         # Enable paste of clipboard after termination
         clipboard = QApplication.clipboard()
-        event = QtCore.QEvent(QtCore.QEvent.Clipboard)
+        event = QEvent(QEvent.Clipboard)
         QApplication.sendEvent(clipboard, event)
         return QMainWindow.closeEvent(self, *args, **kwargs)
 

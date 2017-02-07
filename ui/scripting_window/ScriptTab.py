@@ -3,8 +3,14 @@ import os
 from qtpy.QtCore import Qt, QEvent
 from qtpy.QtWidgets import QMessageBox, QGridLayout, QWidget
 from qtpy.QtGui import QFont, QFontMetrics, QColor, QKeyEvent
+import qtpy
 
-from Qsci import QsciScintilla, QsciLexerPython, QsciAPIs
+if qtpy.API=="pyqt5":
+    from PyQt5.Qsci import QsciScintilla, QsciLexerPython, QsciAPIs    
+else:
+    from PyQt4.Qsci import QsciScintilla, QsciLexerPython, QsciAPIs
+    
+
 
 
 #from model.Simulation import *

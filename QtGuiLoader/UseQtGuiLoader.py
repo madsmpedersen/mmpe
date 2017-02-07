@@ -6,15 +6,18 @@ Examples of how to use QtGuiLoader
 @version: 1.5 (4/7-2013)
 @author: Mads M Pedersen (mmpe@dtu.dk)
 '''
-from PyQt4 import QtGui, QtCore
-from mmpe.QtGuiLoader import QtMainWindowLoader, QtWidgetLoader, QtDialogLoader
-import MyMainWindowUI
-import MyWidgetUI
+
+"""Use as MainWindow"""
 
 import sys
 
+from qtpy.QtWidgets import QMainWindow, QPushButton, QApplication
 
-"""Use as MainWindow"""
+import MyMainWindowUI
+import MyWidgetUI
+from mmpe.QtGuiLoader import QtMainWindowLoader, QtWidgetLoader, QtDialogLoader
+
+
 class MyMainWindow(QtMainWindowLoader):
     def __init__(self, parent=None):
         ui_module = MyWidgetUI
@@ -43,19 +46,19 @@ class MyDialog(QtDialogLoader):
 
     def actionPrintText(self):
         print ("Dialog text: %s" % self.ui.lineEdit.text())
-##run using
-#if __name__=="__main__":
-#    MyDialog(None,True).start()
+#run using
+if __name__=="__main__":
+    MyDialog(None,True).start()
 
 
 
 """Use as ui_widget with actionhandlers at parent(e.g. QMainWindow) subclass """
-class WidgetWindow(QtGui.QMainWindow):
+class WidgetWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         ui_module = MyWidgetUI
         try: self.ui = ui_module.Ui_Form()  #enable autocomplete
         except: pass
-        QtGui.QMainWindow.__init__(self, *args, **kwargs)
+        QMainWindow.__init__(self, *args, **kwargs)
         self.widget = QtWidgetLoader(ui_module=ui_module, parent=self, action_receiver=self)
         self.widget.ui.lineEdit.setText("MyWidget")
         self.show()
@@ -66,7 +69,7 @@ class WidgetWindow(QtGui.QMainWindow):
 
 # #Run using:
 #if __name__=="__main__":
-#    app = QtGui.QApplication(sys.argv)
+#    app = QApplication(sys.argv)
 #    w = WidgetWindow()
 #    print w
 #    app.exec_()
@@ -86,8 +89,8 @@ class MyWidget(QtWidgetLoader):
         print ("Widget text: %s" % self.ui.lineEdit.text())
 
 # #run using
-# app = QtGui.QApplication(sys.argv)
-# window = QtGui.QMainWindow()
+# app = QApplication(sys.argv)
+# window = QMainWindow()
 # w = MyWidget(window)
 # print w
 # window.show()
@@ -117,7 +120,7 @@ class MyCombinationWindow(QtMainWindowLoader):
         self.ui.horizontalLayout.addWidget(MyWidget(self))
 
         #Add button that opens as QDialog
-        self.ui.horizontalLayout.addWidget(QtGui.QPushButton("Open dialog", self, clicked=self.open_dialog))
+        self.ui.horizontalLayout.addWidget(QPushButton("Open dialog", self, clicked=self.open_dialog))
 
     def open_dialog(self):
         #open as QDialog
@@ -133,13 +136,13 @@ def test(nr):
     elif nr == 2:
         MyDialog(None, True).start()
     elif nr == 3:
-        app = QtGui.QApplication(sys.argv)
+        app = QApplication(sys.argv)
         w = WidgetWindow()
         print (w)
         app.exec_()
     if nr == 4:
-        app = QtGui.QApplication(sys.argv)
-        window = QtGui.QMainWindow()
+        app = QApplication(sys.argv)
+        window = QMainWindow()
         w = MyWidget(window)
         print (w)
         window.show()
@@ -148,6 +151,6 @@ def test(nr):
         MyMainWindowWithMenu().start()
     if nr == 6:
         MyCombinationWindow().start()
-test(5)
+#test(5)
 #for i in range(1, 7):
 #    test(i)

@@ -8,8 +8,9 @@ from threading import Thread
 import threading
 import time
 
-from qtpy.QtWidgets import QMainWindow
+from qtpy.QtCore import Qt
 from qtpy import QtCore
+from qtpy.QtWidgets import QMainWindow
 from qtpy.QtWidgets import QProgressDialog, QApplication
 
 
@@ -46,10 +47,10 @@ class QtProgressInformation(object):
         self._parent = parent
         self._progressDialog = QProgressDialog(self._parent)
         self._progressDialog.setMinimumWidth(300)
-        self._progressDialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        self._progressDialog.setWindowModality(Qt.ApplicationModal)
         self._progressDialog.setMinimumDuration(0)
-        #self._progressDialog.hide()
-        #self.progress_iterator = lambda seq, text = "Working... Please wait", allow_cancel = True, self = self : self.QtProgressIterator(self, seq, text, allow_cancel)
+        self._progressDialog.hide()
+#        self.progress_iterator = lambda seq, text = "Working... Please wait", allow_cancel = True, self = self : self.QtProgressIterator(self, seq, text, allow_cancel)
 
     def progress_iterator(self, sequence, text="Working... Please wait", allow_cancel=True, always_refresh=True):
         return self.QtProgressIterator(self, sequence, text, allow_cancel)
@@ -164,10 +165,10 @@ class QtProgressInformation(object):
     def exec_long_task(self, text, allow_cancel, task, *args, **kwargs):
 
 
-#        class TaskQThread(QtCore.QThread):
+#        class TaskQThread(QThread):
 #            result = None
 #            def __init__(self, _parent, task, *args, **kwargs):
-#                QtCore.QThread.__init__(self)
+#                QThread.__init__(self)
 #                self.task = lambda: task(*args, **kwargs)
 #
 #            def run(self):

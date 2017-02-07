@@ -30,7 +30,7 @@ class TestMainWindow(QtMainWindowLoader, QtUI, AutoUpdater):
 
 
 #    def __init__(self, *args, **kwargs):
-#        QtGui.QMainWindow.__init__(self, *args, **kwargs)
+#        QMainWindow.__init__(self, *args, **kwargs)
 #
 #        QtUI.__init__(self, self)
 #        AutoUpdater.__init__(self, r'http://tools.windenergy.dtu.dk/HAWC2Launcher/downloads/')
@@ -38,11 +38,11 @@ class TestMainWindow(QtMainWindowLoader, QtUI, AutoUpdater):
 
 #        self.menubar = self.menuBar()
 #        self.fileMenu = self.menubar.addMenu('&File')
-#        openAction = QtGui.QAction(QtGui.QIcon('open.png'), '&Open...', self)
+#        openAction = QAction(QIcon('open.png'), '&Open...', self)
 #        openAction.setShortcut('Ctrl+O')
 #        openAction.setStatusTip('Open...')
 #        openAction.triggered.connect(self.actionOpen)
-#        exitAction = QtGui.QAction("&Exit", self, shortcut='Ctrl+Q', statusTip='Exit', triggered=app.exit)
+#        exitAction = QAction("&Exit", self, shortcut='Ctrl+Q', statusTip='Exit', triggered=app.exit)
 #        self.fileMenu.addAction(openAction)
 #        self.fileMenu.addSeparator()
 #        sep = self.fileMenu.addSeparator()

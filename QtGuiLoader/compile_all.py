@@ -28,16 +28,14 @@ def _compile_all(path, compile_func):
     exe_dir = os.path.dirname(sys.executable)
     os.environ['PATH'] = "%s;%s;%s/scripts" % (os.environ['PATH'], exe_dir, exe_dir)
     os.environ['WINPYDIR'] = exe_dir
+    api = qtpy.QtCore.Qt.__module__.replace(".QtCore","")
     for ui_file in get_ui_list(path):
         py_file = ui_file.replace(".ui", ".py")
 
 
         if os.path.exists(py_file):
             with open(py_file) as fid:
-                if pyqt_compile_func is compile_func:
-                    recompile = "PySide" in fid.read()
-                else:
-                    recompile = "PyQt4" in fid.read()
+                recompile = api not in fid.read()
 
         if not os.path.exists(py_file) or \
             os.path.getmtime(ui_file) > os.path.getmtime(py_file) or \
@@ -59,20 +57,15 @@ def compile_all(path="."):
     _compile_all(path, ui_compiler)
 
 def compile_all_pyqt(path="."):
-    os.environ['QT_API'] = qtpy.API
-#    def pyqt_compile_func(ui_file, py_file):
-#        pyuic_path = os.path.join(os.path.dirname(sys.executable), 'Lib/site-packages/PyQt4/uic/pyuic.py')
-#        os.system('"%s" %s %s > %s' % (sys.executable, pyuic_path, ui_file, py_file))
-
     _compile_all(path, pyqt_compile_func)
 
-def compile_all_pyside(path="."):
-    os.environ['QT_API'] = "pyside"
-
-    _compile_all(path, pyside_compile_func)
+# def compile_all_pyside(path="."):
+#     os.environ['QT_API'] = "pyside"
+# 
+#     _compile_all(path, pyside_compile_func)
 
 if "__main__" == __name__:
     import os
     path = r"C:\mmpe\python\pydap_redmine\trunk"
     print (os.path.realpath(path))
-    compile_all_pyside(path)
+    compile_all_pyqt(path)

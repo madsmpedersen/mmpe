@@ -6,10 +6,10 @@ import sys
 import time
 import traceback
 
-import PyQt4
-from PyQt4.QtCore import Qt, QUrl
-from qtpy.QtWidgets import QMessageBox, QDialog, QFileDialog, QIcon, QApplication
-#from mmpe.functions.exe_std_out import ExeStdOut
+from qtpy.QtCore import Qt, QUrl
+from qtpy.QtGui import QIcon
+from qtpy.QtWidgets import QMessageBox, QApplication
+
 from mmpe.QtGuiLoader import QtDialogLoader
 from mmpe.QtGuiLoader.QtGuiLoader import QtMainWindowLoader
 from mmpe.datastructures.Singleton import singleton
@@ -24,6 +24,7 @@ from mmpe.ui.scripting_window.script_function import ScriptFunction
 from mmpe.ui.text_ui import TextUI
 
 
+#from mmpe.functions.exe_std_out import ExeStdOut
 #
 def beep(frq=2500, dur=50):
     if sys.platform == 'win32':

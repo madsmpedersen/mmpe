@@ -4,13 +4,15 @@ Created on 13/02/2014
 @author: mmpe
 '''
 import inspect
+from types import FunctionType, MethodType
 import unittest
+
+from qtpy.QtWidgets import QApplication
 
 from mmpe.ui.daemon_ui import DaemonUI
 from mmpe.ui.qt_ui import QtOutputUI, QtStatusUI
 from mmpe.ui.text_ui import TextUI, TextOutputUI, TextStatusUI
-from PyQt4 import QtGui
-from types import FunctionType, MethodType
+
 
 def compare(a, b):
     methods = lambda obj : set([m for m in dir(obj) if not m.startswith('_') and isinstance(getattr(obj, m), (FunctionType, MethodType))])
@@ -40,12 +42,12 @@ class Test(unittest.TestCase):
         compare(TextOutputUI(), QtOutputUI())
 
     def test_text_qt_status(self):
-        app = QtGui.QApplication([])
+        app = QApplication([])
         compare(TextStatusUI(), QtStatusUI(None))
 
 
 #    def test_text_qt(self):
-#        app = QtGui.QApplication([])
+#        app = QApplication([])
 #        qt = QtUI(parent=None)
 #        text = TextUI
 #        self.assertFalse(compare(text, qt))

@@ -1,6 +1,6 @@
 import os
 
-from PyQt4 import QtGui
+
 
 import sys
 if hasattr(sys, "frozen"):
@@ -24,7 +24,7 @@ os.environ['QT_API'] = "pyqt"
 class Plot(QtMainWindowLoader):
     def __init__(self):
         QtMainWindowLoader.__init__(self, PlotUI)
-        self.setWindowIcon(QtGui.QIcon('Pydap.ico'))
+        self.setWindowIcon(QIcon('Pydap.ico'))
         self.setWindowTitle(os.getcwd())
 
 

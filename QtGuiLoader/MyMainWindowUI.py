@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'MyMainWindowUI.ui'
+# Form implementation generated from reading ui file '.\mmpe\QtGuiLoader\MyMainWindowUI.ui'
 #
-# Created: Wed Sep  3 07:58:53 2014
-#      by: PyQt4 UI code generator 4.9.6
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -58,4 +57,14 @@ class Ui_MainWindow(object):
         self.actionSayHello.setText(_translate("MainWindow", "SayHello", None))
         self.actionSayHello.setToolTip(_translate("MainWindow", "Prints \"Hello\"", None))
         self.actionSayHello.setShortcut(_translate("MainWindow", "Ctrl+S", None))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtGui.QApplication(sys.argv)
+    MainWindow = QtGui.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
 

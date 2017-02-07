@@ -2,7 +2,6 @@
 #
 # Copyright © 2009 Pierre Raybaut
 # Licensed under the terms of the MIT License
-
 """
 MatplotlibWidget
 ================
@@ -16,21 +15,23 @@ Derived from 'embedding_in_pyqt4.py':
 Copyright © 2005 Florent Rougon, 2006 Darren Dale
 """
 
-__version__ = "1.0.0"
-
-from qtpy.QtWidgets import QSizePolicy
-from PyQt4.QtCore import QSize
-
+from qtpy.QtCore import QSize
+from matplotlib import rcParams
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as Canvas
 from matplotlib.figure import Figure
+from qtpy.QtWidgets import QSizePolicy
 
-from matplotlib import rcParams
+
+__version__ = "1.0.0"
+
+
+
 rcParams['font.size'] = 9
 
 
 class MatplotlibWidget(Canvas):
     """
-    MatplotlibWidget inherits PyQt4.QtGui.QWidget
+    MatplotlibWidget inherits PyQt4.QWidget
     and matplotlib.backend_bases.FigureCanvasBase
     
     Options: option_name (default_value)

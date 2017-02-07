@@ -5,8 +5,10 @@ Created on 21/05/2013
 '''
 import sys
 
-from PyQt4 import QtCore, QtGui
-from PyQt4.QtCore import pyqtSignal
+from qtpy.QtCore import Signal, Qt
+from qtpy.QtWidgets import QWidget, QHBoxLayout, QSlider, QApplication, \
+    QMainWindow, QVBoxLayout, QDoubleSpinBox
+
 from mmpe.functions.Decorators import postpone_until_last_call_finishes
 import numpy as np
 
@@ -15,15 +17,15 @@ import numpy as np
 #except NameError: pass
 #try: str = unicode; unicode = None
 #except NameError: pass
-class SliderSpinBox(QtGui.QWidget):
-    valueChanged = pyqtSignal(float)
+class SliderSpinBox(QWidget):
+    valueChanged = Signal(float)
 
     def __init__(self, parent=None, value_range=(0, 100), slider_steps=100, spinbox_steps=1000, decimals=None):
-        QtGui.QWidget.__init__(self, parent)
-        layout = QtGui.QHBoxLayout(self)
+        QWidget.__init__(self, parent)
+        layout = QHBoxLayout(self)
         self.setLayout(layout)
-        self.horizontalSlider = QtGui.QSlider(QtCore.Qt.Horizontal, self)
-        self.doubleSpinBox = QtGui.QDoubleSpinBox(self)
+        self.horizontalSlider = QSlider(Qt.Horizontal, self)
+        self.doubleSpinBox = QDoubleSpinBox(self)
         self.decimals = decimals
         layout.setMargin(0)
         layout.addWidget(self.doubleSpinBox)
@@ -160,11 +162,11 @@ class PolynomialSliderSpinBox(SliderSpinBox):
 #        self.wt.append(wt)
 #
 #
-#class WorkThread(QtCore.QThread):
-#    done = QtCore.pyqtSignal(float)
+#class WorkThread(QThread):
+#    done = Signal(float)
 #
 #    def __init__(self, holdIt, value):
-#        QtCore.QThread.__init__(self)
+#        QThread.__init__(self)
 #        self.holdIt = holdIt
 #        self.value = value
 #
@@ -175,12 +177,12 @@ class PolynomialSliderSpinBox(SliderSpinBox):
 #        print "update finished", self.value
 
 if __name__ == '__main__':
-    app = QtGui.QApplication(sys.argv)
-    m = QtGui.QMainWindow()
+    app = QApplication(sys.argv)
+    m = QMainWindow()
 
-    w = QtGui.QWidget()
+    w = QWidget()
     m.setCentralWidget(w)
-    vlayout = QtGui.QVBoxLayout(w)
+    vlayout = QVBoxLayout(w)
     s_log = LogaritmicSliderSpinBox(m, slider_steps=100)
     s_lin = SliderSpinBox(m, slider_steps=100)
     s_pol = PolynomialSliderSpinBox(m, 2, slider_steps=100, spinbox_steps=1000)
