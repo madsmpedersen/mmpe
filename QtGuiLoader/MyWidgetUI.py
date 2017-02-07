@@ -2,47 +2,59 @@
 
 # Form implementation generated from reading ui file '.\mmpe\QtGuiLoader\MyWidgetUI.ui'
 #
-# Created by: PyQt5 UI code generator 5.6
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt4 import QtCore, QtGui
+
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_Form(object):
     def setupUi(self, Form):
-        Form.setObjectName("Form")
+        Form.setObjectName(_fromUtf8("Form"))
         Form.resize(223, 164)
-        self.horizontalLayoutWidget = QtWidgets.QWidget(Form)
+        self.horizontalLayoutWidget = QtGui.QWidget(Form)
         self.horizontalLayoutWidget.setGeometry(QtCore.QRect(9, 9, 191, 25))
-        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.lineEdit = QtWidgets.QLineEdit(self.horizontalLayoutWidget)
-        self.lineEdit.setObjectName("lineEdit")
+        self.horizontalLayoutWidget.setObjectName(_fromUtf8("horizontalLayoutWidget"))
+        self.horizontalLayout = QtGui.QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        self.lineEdit = QtGui.QLineEdit(self.horizontalLayoutWidget)
+        self.lineEdit.setObjectName(_fromUtf8("lineEdit"))
         self.horizontalLayout.addWidget(self.lineEdit)
-        self.pushButton = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.pushButton.setObjectName("pushButton")
+        self.pushButton = QtGui.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton.setObjectName(_fromUtf8("pushButton"))
         self.horizontalLayout.addWidget(self.pushButton)
-        self.actionPrintText = QtWidgets.QAction(Form)
-        self.actionPrintText.setObjectName("actionPrintText")
+        self.actionPrintText = QtGui.QAction(Form)
+        self.actionPrintText.setObjectName(_fromUtf8("actionPrintText"))
 
         self.retranslateUi(Form)
-        self.pushButton.clicked.connect(self.actionPrintText.trigger)
+        QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.actionPrintText.trigger)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
-        _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        self.lineEdit.setText(_translate("Form", "test"))
-        self.pushButton.setText(_translate("Form", "PushButton"))
-        self.actionPrintText.setText(_translate("Form", "PrintText"))
+        Form.setWindowTitle(_translate("Form", "Form", None))
+        self.lineEdit.setText(_translate("Form", "test", None))
+        self.pushButton.setText(_translate("Form", "PushButton", None))
+        self.actionPrintText.setText(_translate("Form", "PrintText", None))
 
 
 if __name__ == "__main__":
     import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
+    app = QtGui.QApplication(sys.argv)
+    Form = QtGui.QWidget()
     ui = Ui_Form()
     ui.setupUi(Form)
     Form.show()

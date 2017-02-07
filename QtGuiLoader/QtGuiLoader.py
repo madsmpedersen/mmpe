@@ -30,7 +30,7 @@ import inspect
 import os
 import sys
 
-from PyQt5.QtCore import QSettings, QTimer, QEvent
+from qtpy.QtCore import QSettings, QTimer, QEvent
 from qtpy import QtCore, QtWidgets
 import qtpy
 from qtpy.QtWidgets import QAction, QGridLayout, QApplication, QWidget, QDialog
@@ -216,8 +216,8 @@ class QtMainWindowLoader(QtGuiLoader, QtGuiApplication, QMainWindow):
 
         self.show()
         if hasattr(self, "app"):
-#             QTimer().singleShot(100, self.post_initialize)
-#             self.app.aboutToQuit.connect(self.cleanUp)
+            QTimer().singleShot(100, self.post_initialize)
+            self.app.aboutToQuit.connect(self.cleanUp)
             self.app.exec_()
 
     def post_initialize(self):

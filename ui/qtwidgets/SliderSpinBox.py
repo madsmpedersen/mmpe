@@ -5,8 +5,8 @@ Created on 21/05/2013
 '''
 import sys
 
-from PyQt5.QtCore import pyqtSignal, Qt
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSlider, QApplication, \
+from qtpy.QtCore import Signal, Qt
+from qtpy.QtWidgets import QWidget, QHBoxLayout, QSlider, QApplication, \
     QMainWindow, QVBoxLayout, QDoubleSpinBox
 
 from mmpe.functions.Decorators import postpone_until_last_call_finishes
@@ -18,7 +18,7 @@ import numpy as np
 #try: str = unicode; unicode = None
 #except NameError: pass
 class SliderSpinBox(QWidget):
-    valueChanged = pyqtSignal(float)
+    valueChanged = Signal(float)
 
     def __init__(self, parent=None, value_range=(0, 100), slider_steps=100, spinbox_steps=1000, decimals=None):
         QWidget.__init__(self, parent)
@@ -163,7 +163,7 @@ class PolynomialSliderSpinBox(SliderSpinBox):
 #
 #
 #class WorkThread(QThread):
-#    done = pyqtSignal(float)
+#    done = Signal(float)
 #
 #    def __init__(self, holdIt, value):
 #        QThread.__init__(self)

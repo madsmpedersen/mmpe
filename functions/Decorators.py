@@ -7,7 +7,9 @@ Created on 24/04/2013
 
 import time
 
-from PyQt5.QtCore import QThread, pyqtSignal
+from qtpy.QtCore import QThread, Signal
+
+
 
 
 last_time = {}
@@ -31,7 +33,7 @@ def wait_for_last(f):
 
 
 class WaitThread(QThread):
-    done = pyqtSignal(object)
+    done = Signal(object)
 
     def __init__(self, duration):
         QThread.__init__(self)

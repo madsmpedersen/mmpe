@@ -15,7 +15,7 @@ Derived from 'embedding_in_pyqt4.py':
 Copyright © 2005 Florent Rougon, 2006 Darren Dale
 """
 
-from PyQt5.QtCore import QSize
+from qtpy.QtCore import QSize
 from matplotlib import rcParams
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as Canvas
 from matplotlib.figure import Figure

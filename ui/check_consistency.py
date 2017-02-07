@@ -7,7 +7,7 @@ import inspect
 from types import FunctionType, MethodType
 import unittest
 
-from PyQt5.QtWidgets import QApplication
+from qtpy.QtWidgets import QApplication
 
 from mmpe.ui.daemon_ui import DaemonUI
 from mmpe.ui.qt_ui import QtOutputUI, QtStatusUI

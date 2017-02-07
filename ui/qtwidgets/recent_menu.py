@@ -7,8 +7,8 @@ Created on 25/11/2015
 
 import sys
 
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QMenu, QAction, QMainWindow, QApplication
+from qtpy.QtGui import QIcon
+from qtpy.QtWidgets import QMenu, QAction, QMainWindow, QApplication
 
 from mmpe.QtGuiLoader.QtGuiLoader import QtGuiLoader, QtGuiApplication
 from mmpe.ui.qt_ui import QtUI

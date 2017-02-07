@@ -3,7 +3,7 @@ import os
 import sys
 import traceback
 
-from PyQt5.QtCore import Qt
+from qtpy.QtCore import Qt
 from qtpy import QtGui, QtCore
 from qtpy.QtGui import QCursor
 from qtpy.QtWidgets import QApplication, QCheckBox, QLineEdit, QDialog, \

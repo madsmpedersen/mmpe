@@ -6,9 +6,9 @@ import sys
 import time
 import traceback
 
-from PyQt5.QtCore import Qt, QUrl
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QMessageBox, QApplication
+from qtpy.QtCore import Qt, QUrl
+from qtpy.QtGui import QIcon
+from qtpy.QtWidgets import QMessageBox, QApplication
 
 from mmpe.QtGuiLoader import QtDialogLoader
 from mmpe.QtGuiLoader.QtGuiLoader import QtMainWindowLoader

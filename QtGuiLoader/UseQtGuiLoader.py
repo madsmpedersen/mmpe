@@ -11,7 +11,7 @@ Examples of how to use QtGuiLoader
 
 import sys
 
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QApplication
+from qtpy.QtWidgets import QMainWindow, QPushButton, QApplication
 
 import MyMainWindowUI
 import MyWidgetUI
@@ -46,9 +46,9 @@ class MyDialog(QtDialogLoader):
 
     def actionPrintText(self):
         print ("Dialog text: %s" % self.ui.lineEdit.text())
-##run using
-#if __name__=="__main__":
-#    MyDialog(None,True).start()
+#run using
+if __name__=="__main__":
+    MyDialog(None,True).start()
 
 
 
@@ -151,6 +151,6 @@ def test(nr):
         MyMainWindowWithMenu().start()
     if nr == 6:
         MyCombinationWindow().start()
-test(5)
+#test(5)
 #for i in range(1, 7):
 #    test(i)

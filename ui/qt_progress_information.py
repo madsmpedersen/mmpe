@@ -8,7 +8,7 @@ from threading import Thread
 import threading
 import time
 
-from PyQt5.QtCore import Qt
+from qtpy.QtCore import Qt
 from qtpy import QtCore
 from qtpy.QtWidgets import QMainWindow
 from qtpy.QtWidgets import QProgressDialog, QApplication
