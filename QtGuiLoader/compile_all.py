@@ -7,6 +7,7 @@ import os
 import sys
 
 from mmpe.QtGuiLoader.QtGuiLoader import pyqt_compile_func
+import qtpy
 
 ui_compiler = pyqt_compile_func
 def _compile_all(path, compile_func):
@@ -58,7 +59,7 @@ def compile_all(path="."):
     _compile_all(path, ui_compiler)
 
 def compile_all_pyqt(path="."):
-    os.environ['QT_API'] = "pyqt"
+    os.environ['QT_API'] = qtpy.API
 #    def pyqt_compile_func(ui_file, py_file):
 #        pyuic_path = os.path.join(os.path.dirname(sys.executable), 'Lib/site-packages/PyQt4/uic/pyuic.py')
 #        os.system('"%s" %s %s > %s' % (sys.executable, pyuic_path, ui_file, py_file))
