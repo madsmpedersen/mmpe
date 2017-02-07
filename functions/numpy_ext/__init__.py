@@ -2,8 +2,6 @@
 d = None
 d = dir()
 
-from mmpe.functions.numpy_ext import fourier_fit
-
 
 import numpy as np
 
