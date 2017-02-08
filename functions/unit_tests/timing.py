@@ -7,10 +7,11 @@ import unittest
 import time
 from mmpe.functions.timing import print_time, print_line_time
 import sys
-from StringIO import StringIO
+import io
+
 
 def get_stdout(func, *args, **kwargs):
-    stdout = StringIO()
+    stdout = io.StringIO()
     sys.stdout = stdout
     func(*args, **kwargs)
     sys.stdout = sys.__stdout__

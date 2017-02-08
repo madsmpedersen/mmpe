@@ -158,9 +158,10 @@ def cython_import(import_module_name, compiler=None):
 
 def compile_and_cleanup(module, pyx_filename, module_relname, compiler=None):
     """compile, import compiled module and delete temporary files"""
-
+    cwd = pyx_filename.replace(module.replace(".","/")+".pyx","")
+    setup_filename = cwd + 'tmp_setup.py'
     # Generate setup.py script
-    fid = open('setup.py', 'w')
+    fid = open(setup_filename, 'w')
     setup_str = """from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Distutils import build_ext
@@ -189,11 +190,11 @@ ext_modules = ext_modules
 
 
     bin_python = sys.executable
-    cmd = "%s setup.py build_ext --inplace %s" % (bin_python, compiler_str)
+    cmd = "%s %s build_ext --inplace %s" % (bin_python, setup_filename, compiler_str)
 
     # compile
     print ("compiling %s: %s" % (module, cmd))
-    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, cwd=cwd)
     (out, err) = proc.communicate()
 
     # Reload and check that module is compiled
@@ -216,7 +217,7 @@ ext_modules = ext_modules
 
     else:
         print ("Compiling succeeded")
-        for f in ['setup.py', pyx_filename, pyx_filename.replace(".pyx", '.c')]:
+        for f in [setup_filename, pyx_filename, pyx_filename.replace(".pyx", '.c')]:
             if os.path.isfile(f):
                 os.remove(f)
 

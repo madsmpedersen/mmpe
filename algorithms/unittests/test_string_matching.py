@@ -11,7 +11,6 @@ import time
 import unittest
 
 from mmpe.algorithms.string_matching import SmartMatch
-from mmpe.algorithms.test import score_dict_cython
 from mmpe.cython_compile.cython_compile import cython_compile
 import numpy as np
 
@@ -57,8 +56,9 @@ class Test(unittest.TestCase):
         #print s
         t = time.time()
         from mmpe.cython_compile import cython_import
-        cython_import('string_matching_cython')
-        import string_matching_cython  # import must be after cython_import statement
+        
+        cython_import('mmpe.algorithms.string_matching_cython')
+        from mmpe.algorithms import string_matching_cython  # import must be after cython_import statement
         s = string_matching_cython.score_dict("Mads M Pedersen", lst)
         t2 = time.time() - t
         print (t2, t1)
@@ -66,8 +66,8 @@ class Test(unittest.TestCase):
 
     def testMatchingCython(self):
         from mmpe.cython_compile import cython_import
-        cython_import('string_matching_cython')
-        import string_matching_cython  # import must be after cython_import statement
+        cython_import('mmpe.algorithms.string_matching_cython')
+        from mmpe.algorithms import string_matching_cython  # import must be after cython_import statement
         d = string_matching_cython.generate_special_scores([('D', 'd', 1)])
         s = string_matching_cython.score_dict("Mads", ["mads", "MaDs"], d)
         self.assertAlmostEqual(s['mads'] / 4, 0.975)

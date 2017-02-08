@@ -3,13 +3,12 @@ Created on 29/01/2014
 
 @author: MMPE
 '''
-import unittest
-import time
-from mmpe.functions import class_list, argument_string
-import sys
-from io import StringIO
-import numpy as np
 import os
+import unittest
+from mmpe.functions import class_list, argument_string
+import numpy as np
+
+
 os.chdir("../../")
 
 class Test(unittest.TestCase):
