@@ -29,6 +29,8 @@ class Ui_Form(object):
         Form.resize(624, 526)
         Form.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.gridLayout_2 = QtGui.QGridLayout(Form)
+        self.gridLayout_2.setMargin(0)
+        self.gridLayout_2.setSpacing(0)
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
         self.menuBar = QtGui.QMenuBar(Form)
         self.menuBar.setObjectName(_fromUtf8("menuBar"))
