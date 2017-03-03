@@ -13,6 +13,7 @@ with MySqlReader(server="10.40.20.10", database="poseidon", username='mmpe', pas
 from mmpe.functions.deep_coding import to_str
 from mmpe.functions.timing import print_time
 import warnings
+import os
 
 
 #import mysqlclient as MySQLdb
@@ -91,24 +92,27 @@ class MySqlBase(object):
         self.database = database
         self.port = port
         #self.tables()
+        self.mysql40 = server in ['ri-veadbs03']
 
     def __enter__(self):
         #global no_connections
         #no_connections += 1
         #print ("connect", no_connections)
-        self.db = MySQLdb.connect(host=self.server,
-                     user=self.username,
-                     passwd=self.password,
-                     db=self.database, port=self.port)
-        self.cursor = self.db.cursor()
+        if not self.mysql40:
+            self.db = MySQLdb.connect(host=self.server,
+                         user=self.username,
+                         passwd=self.password,
+                         db=self.database, port=self.port)
+            self.cursor = self.db.cursor()
         return self
 
     def __exit__(self, type, value, traceback):
         #global no_connections
-        self.cursor.close()
-        delattr(self, "cursor")
-        self.db.close()
-        delattr(self, "db")
+        if not self.mysql40:
+            self.cursor.close()
+            delattr(self, "cursor")
+            self.db.close()
+            delattr(self, "db")
         #no_connections -= 1
         #print ("close", no_connections)
 
@@ -125,11 +129,16 @@ class MySqlReader(MySqlBase):
         MySqlBase.__init__(self, server, database, username=username, password=password, port=port)
 
     def read(self, query):
-        try:
-            return pd.read_sql(query, self.db)
-        except Exception as e:
-            e.args = e.args + (query,)
-            raise e
+        if self.mysql40:
+            exe = os.path.join(os.path.dirname(__file__), 'mysql40reader.exe')
+            print ("""%s %s %s %s %s "%s" tmp.h5"""%(exe, self.server, self.username, self.password, self.port, query))
+            os.system("""%s %s %s %s %s %s "%s" tmp.h5"""%(exe, self.server, self.database, self.username, self.password, self.port, query))
+        else:
+            try:
+                return pd.read_sql(query, self.db)
+            except Exception as e:
+                e.args = e.args + (query,)
+                raise e
 
     
     def read_txt(self, query):
@@ -145,8 +154,7 @@ class MySqlReader(MySqlBase):
     
 
     def tables(self):
-        tables = [tn[0] for tn in self.read("SHOW TABLES")[0]]
-        return tables
+        return self.read("SHOW TABLES").iloc[:,0].tolist()
 
     def table_exists(self, table):
         return table in self.tables()
