@@ -17,10 +17,11 @@ import warnings
 
 #import mysqlclient as MySQLdb
 try:
-    import pymysql as MySQLdb
-    #import MySQLdb
+    import MySQLdb
+except:
     pass
-    #import mysql.connector as MySQLdb
+try:
+    import pymysql as MySQLdb
 except:
     pass
 import numpy as np
@@ -125,13 +126,7 @@ class MySqlReader(MySqlBase):
 
     def read(self, query):
         try:
-            self.cursor.execute(query)
-            result = self.cursor.fetchall()
-            description = self.cursor.description
-            names = [d[0] for d in description]
-            dataframe = pd.DataFrame({name:data for name, data in zip(names, zip(*result))})
-            return dataframe
-            return result, description
+            return pd.read_sql(query, self.db)
         except Exception as e:
             e.args = e.args + (query,)
             raise e
