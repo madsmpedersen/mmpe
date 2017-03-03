@@ -61,12 +61,16 @@ class StatusUI(object):
     def end_wait(self):
         self.is_waiting = False
 
+    def progress_callback(self):
+        def callback(n,N):
+            pass 
+        return callback
+
 class UI(InputUI, OutputUI, StatusUI):
     pass
 
 
 from .text_ui import *
-from .qt_progress_information import *
 from .daemon_ui import *
 
 __all__ = [m for m in set(dir()) - set(d)]

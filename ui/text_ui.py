@@ -2,6 +2,7 @@
 import sys
 from mmpe.ui import OutputUI, InputUI, UI, StatusUI
 import time
+from getpass import getpass
 
 
 
@@ -62,6 +63,9 @@ class TextInputUI(InputUI):
 
     def get_foldername(self, title='Select directory', file_dir=None):
         raise NotImplementedError
+    
+    def get_password(self, msg):
+        return getpass(msg)
 
 
 
@@ -107,13 +111,40 @@ class TextStatusUI(StatusUI, TextOutputUI):
         pass
 
 
-
+    def progress_callback(self, text="Working... Please wait", always_refresh=False):
+        class ProgressCallBack():
+            
+            def __init__(self, ui, text, always_refresh=False):
+                self.ui = ui
+                self.text = text
+                self.always_refresh = always_refresh
+                self.pct = None
+            
+            def init(self):
+                self.ui.show_text("\n\n" + self.text, flush=True)
+                self.ui.show_text("|0" + " " * 46 + "50%" + " " * 46 + "100%|")
+                self.pct = 0
+                self.ui.show_text("|", end="")
+                
+            def __call__(self, n, N):
+                if (self.pct is None) or (self.ui.last_text != "." and n > 0) or (self.always_refresh and ((n + 1) / N * 100 > pct)):
+                    self.init()
+                while ((n + 1) / N * 100 > self.pct):
+                    self.ui.show_text(".", end="", flush=True)
+                    self.pct += 1
+                if self.pct==100:
+                    self.ui.show_text("|")
+        return ProgressCallBack(self, text, always_refresh)
+                
 class TextUI(TextInputUI, TextStatusUI):
     pass
 
 
 if __name__ == "__main__":
-    for i in TextStatusUI().progress_iterator(range(1000)):
-        if i==100:
-            print ("hej")
-        time.sleep(.002)
+    def task(callback):
+        for i in range(100):
+            callback(i,100)
+            time.sleep(0.05)
+            
+    task (TextStatusUI().progress_callback())
+        
