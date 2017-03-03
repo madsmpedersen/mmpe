@@ -71,7 +71,7 @@ class QtGuiLoader(object):
             if hasattr(action_receiver, "_" + name) and hasattr(self, "run") and hasattr(self, 'gui'):
                 func = getattr(action_receiver, "_" + name)
                 def action_wrapper(f):
-                    def wrapper(*args, **kwargs):
+                    def wrapper(checked, *args, **kwargs):
                         return self.gui.run(f, *args, **kwargs)
                     return wrapper
 
