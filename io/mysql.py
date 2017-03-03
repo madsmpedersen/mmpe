@@ -15,9 +15,12 @@ from mmpe.functions.timing import print_time
 import warnings
 
 
-
+#import mysqlclient as MySQLdb
 try:
     import pymysql as MySQLdb
+    #import MySQLdb
+    pass
+    #import mysql.connector as MySQLdb
 except:
     pass
 import numpy as np
@@ -125,10 +128,26 @@ class MySqlReader(MySqlBase):
             self.cursor.execute(query)
             result = self.cursor.fetchall()
             description = self.cursor.description
+            names = [d[0] for d in description]
+            dataframe = pd.DataFrame({name:data for name, data in zip(names, zip(*result))})
+            return dataframe
             return result, description
         except Exception as e:
             e.args = e.args + (query,)
             raise e
+
+    
+    def read_txt(self, query):
+        try:
+            self.cursor.execute(query)
+            result = self.cursor.fetchall()
+            description = self.cursor.description
+            return result, description
+        except Exception as e:
+            e.args = e.args + (query,)
+            raise e
+
+    
 
     def tables(self):
         tables = [tn[0] for tn in self.read("SHOW TABLES")[0]]
