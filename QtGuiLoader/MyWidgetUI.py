@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file '.\mmpe\QtGuiLoader\MyWidgetUI.ui'
 #
-# Created: Thu Jan 12 09:08:14 2017
-#      by: PyQt4 UI code generator 4.9.6
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -31,7 +30,6 @@ class Ui_Form(object):
         self.horizontalLayoutWidget.setGeometry(QtCore.QRect(9, 9, 191, 25))
         self.horizontalLayoutWidget.setObjectName(_fromUtf8("horizontalLayoutWidget"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.horizontalLayoutWidget)
-        self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.lineEdit = QtGui.QLineEdit(self.horizontalLayoutWidget)
         self.lineEdit.setObjectName(_fromUtf8("lineEdit"))
@@ -51,4 +49,14 @@ class Ui_Form(object):
         self.lineEdit.setText(_translate("Form", "test", None))
         self.pushButton.setText(_translate("Form", "PushButton", None))
         self.actionPrintText.setText(_translate("Form", "PrintText", None))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtGui.QApplication(sys.argv)
+    Form = QtGui.QWidget()
+    ui = Ui_Form()
+    ui.setupUi(Form)
+    Form.show()
+    sys.exit(app.exec_())
 

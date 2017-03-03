@@ -1,5 +1,5 @@
-from PyQt4.QtGui import QFrame, QWidget, QTextEdit, QHBoxLayout, QPainter
-from PyQt4.QtCore import Qt, QEvent
+from qtpy.QtWidgets import QFrame, QWidget, QTextEdit, QHBoxLayout, QPainter
+
 
 # source: http://john.nachtimwald.com/2009/08/15/qtextedit-with-line-numbers/
 

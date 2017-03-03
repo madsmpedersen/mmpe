@@ -8,26 +8,26 @@ Created on 10/02/2014
 
 import sys
 
-from PyQt4 import QtCore, QtGui
-from PyQt4.QtGui import QTabWidget, QLabel
+from qtpy import QtCore, QtGui
+from qtpy.QtWidgets import QTabWidget, QLabel
 
 
-class TabWidget(QtGui.QTabWidget):
+class TabWidget(QTabWidget):
 
     def __init__(self, tab_widget):
         QTabWidget.__init__(self)
         self.tab_widget = tab_widget
         self.setTabsClosable(True)
         self.setMovable(True)
-        self.insertTab(0, QtGui.QWidget(), "")
+        self.insertTab(0, QWidget(), "")
         self.new_label = QLabel("*")
-        self.tabBar().setTabButton(0, QtGui.QTabBar.RightSide, self.new_label)
+        self.tabBar().setTabButton(0, QTabBar.RightSide, self.new_label)
         self.currentChanged.connect(self.current_tab_changed)
-        QtCore.QObject.connect(self, QtCore.SIGNAL("tabCloseRequested(int)"), self.close_tab)
-        QtCore.QObject.connect(self.tabBar(), QtCore.SIGNAL("tabMoved(int,int)"), self.tabMoved)
+        QObject.connect(self, SIGNAL("tabCloseRequested(int)"), self.close_tab)
+        QObject.connect(self.tabBar(), SIGNAL("tabMoved(int,int)"), self.tabMoved)
 
         self.labels = lambda: [str(self.tabBar().tabText(i)).lower() for i in range(self.count())]
-        self.tabBar().setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.tabBar().setContextMenuPolicy(Qt.CustomContextMenu)
         self.tabBar().customContextMenuRequested.connect(self.openMenu)
         self.add_tab()
 
@@ -73,7 +73,7 @@ class TabWidget(QtGui.QTabWidget):
 
     def setTabText(self, index, tab_text):
         tab_text = self.unique_tab_text(tab_text, index)
-        QtGui.QTabWidget.setTabText(self, index, tab_text)
+        QTabWidget.setTabText(self, index, tab_text)
         return tab_text
 
     def unique_tab_text(self, tab_text, index=-1):
@@ -92,7 +92,7 @@ class TabWidget(QtGui.QTabWidget):
 
     def openMenu(self, position):
         def edit():
-            menu = QtGui.QMenu()
+            menu = QMenu()
             editAction = menu.addAction("Rename")
             return editAction == menu.exec_(self.mapToGlobal(position))
         tabindex = self.tabBar().tabAt(position)
@@ -100,7 +100,7 @@ class TabWidget(QtGui.QTabWidget):
             self.setCurrentIndex(tabindex)
 
             if edit():
-                tabname, ok = QtGui.QInputDialog.getText(self, "Enter new name", "New name", text=self.tabText(tabindex))
+                tabname, ok = QInputDialog.getText(self, "Enter new name", "New name", text=self.tabText(tabindex))
                 if ok:
                     self.widget(tabindex).name = tabname
                     self.setTabText(tabindex, str(tabname))
@@ -114,12 +114,12 @@ class TabWidget(QtGui.QTabWidget):
 
 
 if __name__ == '__main__':
-    app = QtGui.QApplication(sys.argv)
+    app = QApplication(sys.argv)
     def ptt(txt):
         print (txt)
-    m = QtGui.QMainWindow()
+    m = QMainWindow()
     def new_widget():
-        return QtGui.QPushButton("hello")
+        return QPushButton("hello")
     t = TabWidget(new_widget)
 
     m.setCentralWidget(t)

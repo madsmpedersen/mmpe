@@ -12,7 +12,7 @@ import imp
 if sys.version_info[0] >= 3:
     basestring = str
 
-
+import numpy as np
 
 class ScriptRunner(object):
     def __init__(self, controller, gui, model):

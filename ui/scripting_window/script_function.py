@@ -1,4 +1,4 @@
-from PyQt4 import QtGui
+from qtpy import QtGui
 import inspect
 import os
 import zipfile

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'PlotUI.ui'
+# Form implementation generated from reading ui file '.\mmpe\build_exe\cx\tests\demonstration\PlotUI.ui'
 #
-# Created: Fri Nov 14 09:00:48 2014
-#      by: PyQt4 UI code generator 4.9.6
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -56,4 +55,14 @@ class Ui_Form(object):
         Form.setWindowTitle(_translate("Form", "Form", None))
         self.labelimage.setText(_translate("Form", "TextLabel", None))
         self.actionUpdate.setText(_translate("Form", "update", None))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtGui.QApplication(sys.argv)
+    Form = QtGui.QWidget()
+    ui = Ui_Form()
+    ui.setupUi(Form)
+    Form.show()
+    sys.exit(app.exec_())
 

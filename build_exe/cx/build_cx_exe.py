@@ -17,7 +17,7 @@ MATPLOTLIB = 'matplotlib'
 GUIDATA = 'guidata'
 PYQT4 = 'PyQt4'
 PYQT4LIM = 'PyQt4Lim'
-PYQT5 = "PyQt5"
+PYQT5 = "qtpy"
 PYSIDE = 'PySide'
 SCIPY = 'scipy'
 CTYPES = '_ctypes'
@@ -120,7 +120,7 @@ def write_setup(name, version, description="", author="", modules=[NUMPY], inclu
 
     if PYQT5 in modules:
         pass
-        #include_files.append(os.path.dirname(sys.executable) + '/Lib\site-packages\PyQt5\Qt/plugins\platforms\qwindows.dll')
+        #include_files.append(os.path.dirname(sys.executable) + '/Lib\site-packages\qtpy\Qt/plugins\platforms\qwindows.dll')
 #    if SCIPY in modules:
 #        imports.append("import scipy.sparse.csgraph")
 #        includes.extend(["scipy.sparse.csgraph._validation",  #"scipy.sparse.linalg.dsolve.umfpack",
@@ -336,8 +336,8 @@ def copy_imageformats():
     """
     from PyQt4 import QtCore
     import sys
-    app = QtCore.QCoreApplication(sys.argv)
-    qt_library_path = QtCore.QCoreApplication.libraryPaths()
+    app = QCoreApplication(sys.argv)
+    qt_library_path = QCoreApplication.libraryPaths()
 
 
     imageformats_path = None

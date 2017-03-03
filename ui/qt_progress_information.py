@@ -1,17 +1,23 @@
+
+
+
+import collections
+import inspect
 import sys
 from threading import Thread
+import threading
 import time
 
-from PyQt4 import QtCore, QtGui
-import threading
-import inspect
-import collections
-try:
-    from PyQt4.QtCore import QString
-except:
-    QString = str
+from qtpy.QtCore import Qt
+from qtpy import QtCore
+from qtpy.QtWidgets import QMainWindow
+from qtpy.QtWidgets import QProgressDialog, QApplication
 
 
+# try:
+#     from pyqt.QtCore import QString
+# except:
+#     QString = str
 class CancelWarning(Warning):
     pass
 class TaskThread(Thread):
@@ -39,11 +45,12 @@ class CancelableTaskThread(TaskThread):
 class QtProgressInformation(object):
     def __init__(self, parent):
         self._parent = parent
-        self._progressDialog = QtGui.QProgressDialog(self._parent)
+        self._progressDialog = QProgressDialog(self._parent)
         self._progressDialog.setMinimumWidth(300)
-        self._progressDialog.setWindowModality(QtCore.Qt.ApplicationModal)
+        self._progressDialog.setWindowModality(Qt.ApplicationModal)
         self._progressDialog.setMinimumDuration(0)
-        #self.progress_iterator = lambda seq, text = "Working... Please wait", allow_cancel = True, self = self : self.QtProgressIterator(self, seq, text, allow_cancel)
+        self._progressDialog.hide()
+#        self.progress_iterator = lambda seq, text = "Working... Please wait", allow_cancel = True, self = self : self.QtProgressIterator(self, seq, text, allow_cancel)
 
     def progress_iterator(self, sequence, text="Working... Please wait", allow_cancel=True, always_refresh=True):
         return self.QtProgressIterator(self, sequence, text, allow_cancel)
@@ -60,12 +67,12 @@ class QtProgressInformation(object):
         self._progressDialog.setCancelButtonText(cancel_text)
         self._progressDialog
         self._progressDialog.show()
-        QtGui.QApplication.processEvents()
+        QApplication.processEvents()
 
     def __hide(self):
         self._progressDialog.hide()
         self._progressDialog.close()
-        QtGui.QApplication.processEvents()
+        QApplication.processEvents()
 
     def start_blocking_task(self, text):
         self.__show(text, False)
@@ -138,7 +145,7 @@ class QtProgressInformation(object):
 #                self.taskThread.cancel_event.set()
 #                self.taskThread.join()
 #                #raise CancelWarning
-#            QtGui.QApplication.processEvents()
+#            QApplication.processEvents()
 #        self.taskThread.join()
             self.__hide()
         return res
@@ -153,15 +160,15 @@ class QtProgressInformation(object):
 #                self._progressDialog.setValue(n)
 #                yield(v)
 #            self._progressDialog.hide()
-#            QtGui.QApplication.processEvents()
+#            QApplication.processEvents()
 
     def exec_long_task(self, text, allow_cancel, task, *args, **kwargs):
 
 
-#        class TaskQThread(QtCore.QThread):
+#        class TaskQThread(QThread):
 #            result = None
 #            def __init__(self, _parent, task, *args, **kwargs):
-#                QtCore.QThread.__init__(self)
+#                QThread.__init__(self)
 #                self.task = lambda: task(*args, **kwargs)
 #
 #            def run(self):
@@ -170,7 +177,7 @@ class QtProgressInformation(object):
 #        t.start()
 #        while t.isRunning():
 #            time.sleep(0.1)
-#            QtGui.QApplication.processEvents()
+#            QApplication.processEvents()
 
 
         self.__show(text, allow_cancel)
@@ -186,7 +193,7 @@ class QtProgressInformation(object):
                 self.taskThread.cancel_event.set()
                 self.taskThread.join()
                 raise CancelWarning
-            QtGui.QApplication.processEvents()
+            QApplication.processEvents()
         self.taskThread.join()
         self.__hide()
         if isinstance(self.taskThread.result, Exception):
@@ -195,7 +202,7 @@ class QtProgressInformation(object):
 
     def exec_long_guitask(self, text, task, *args, **kwargs):
         self.__show(text, False)
-        QtGui.QApplication.processEvents()
+        QApplication.processEvents()
         task(*args, **kwargs)
         self.__hide()
 
@@ -213,9 +220,9 @@ def long_task(parent=None, text="Working", allow_cancel=False):
 
 #
 if __name__ == "__main__":
-    class MW(QtGui.QMainWindow, QtProgressInformation):
+    class MW(QMainWindow, QtProgressInformation):
         def __init__(self):
-            QtGui.QMainWindow.__init__(self)
+            QMainWindow.__init__(self)
             QtProgressInformation.__init__(self, self)
 
 
@@ -300,13 +307,13 @@ if __name__ == "__main__":
                         pass
             except CancelWarning:
                 print ("progressbar cancelled")
-            return QtGui.QMainWindow.mouseDoubleClickEvent(self, *args, **kwargs)
+            return QMainWindow.mouseDoubleClickEvent(self, *args, **kwargs)
 
 #            print (self.exec_long_task_with_callback("callback no cancel", allow_cancel=True, task=task3b, callback=self._callback, sec=5))
 
 
 
-    app = QtGui.QApplication(sys.argv)
+    app = QApplication(sys.argv)
     mw = MW()
     mw.show()
     sys.exit(app.exec_())
