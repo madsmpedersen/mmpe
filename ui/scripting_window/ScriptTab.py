@@ -224,7 +224,7 @@ class ScriptTab(QWidget,):
             if ans == QMessageBox.Cancel:
                 return
             elif ans == QMessageBox.Yes:
-                self.parent.actionSave()
+                self.parent.actionSave(checked=False)
             elif ans == QMessageBox.No:
                 break
         self.tabWidget.removeTab(self.index())

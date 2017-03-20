@@ -334,10 +334,10 @@ def copy_imageformats():
     """
     Run this function if icons are not loaded
     """
-    from PyQt4 import QtCore
+    from qtpy import QtCore
     import sys
-    app = QCoreApplication(sys.argv)
-    qt_library_path = QCoreApplication.libraryPaths()
+    app = QtCore.QCoreApplication(sys.argv)
+    qt_library_path = QtCore.QCoreApplication.libraryPaths()
 
 
     imageformats_path = None
