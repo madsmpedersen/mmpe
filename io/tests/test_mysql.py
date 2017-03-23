@@ -20,10 +20,11 @@ def task(n):
         pass
     print("out ", n)
 class Test(unittest.TestCase):
+    pass
 
-    def testRead_localhost(self):
-        with MySqlReader('localhost', 'world',"mmpe", x.mmpe_sql, 3306) as reader:
-            print (reader.tables())
+#     def testRead_localhost(self):
+#         with MySqlReader('localhost', 'world',"mmpe", x.mmpe_sql, 3306) as reader:
+#             print (reader.tables())
             
             #print (pd.read_sql('select * from city;', reader.db))
 
