@@ -27,9 +27,11 @@ from mmpe.ui.text_ui import TextUI
 #from mmpe.functions.exe_std_out import ExeStdOut
 #
 def beep(frq=2500, dur=50):
-    if sys.platform == 'win32':
+    try:
         import winsound
         winsound.Beep(frq, dur)
+    except:
+        pass
 
 
 
