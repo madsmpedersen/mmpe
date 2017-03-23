@@ -45,9 +45,9 @@ class Test(unittest.TestCase):
 #             p = multiprocessing.Pool()
 #             p.map_async(task, range(500))
             
-    def testRead3307(self):
-        with MySqlReader('ri-veadbs03', 'hovsore',"mmpe", x.mmpe_sql, 3306) as reader:
-            print (reader.tables())
+#     def testRead3307(self):
+#         with MySqlReader('ri-veadbs03', 'hovsore',"mmpe", x.mmpe_sql, 3306) as reader:
+#             print (reader.tables())
         
 #     def testRead_localhost(self):
 #         with MySqlReader('localhost', 'world',"mmpe", x.mmpe_sql, 3306) as reader:

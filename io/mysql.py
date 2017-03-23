@@ -131,8 +131,10 @@ class MySqlReader(MySqlBase):
     def read(self, query):
         if self.mysql40:
             exe = os.path.join(os.path.dirname(__file__), 'mysql40reader.exe')
-            print ("""%s %s %s %s %s "%s" tmp.h5"""%(exe, self.server, self.username, self.password, self.port, query))
+            #print ("""%s %s %s %s %s "%s" tmp.h5"""%(exe, self.server, self.username, "xxx", self.port, query))
             os.system("""%s %s %s %s %s %s "%s" tmp.h5"""%(exe, self.server, self.database, self.username, self.password, self.port, query))
+            data = pd.read_hdf("tmp.h5", 'data')
+            return data
         else:
             try:
                 return pd.read_sql(query, self.db)
