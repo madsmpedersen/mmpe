@@ -110,12 +110,13 @@ class QtProgressInformation(object):
                 if self.allow_cancel and self.QtProgressInformation._progressDialog.wasCanceled():
                     raise CancelWarning()
                 self.QtProgressInformation._progressDialog.setValue(self.n)
+                QApplication.processEvents()
             self.n += 1
-
-            try:
-                return self.generator.__next__()
-            except AttributeError:
-                return self.generator.next()  #in python 2, iterators __next__ is named next
+            return next(self.generator)
+#             try:
+#                 return self.generator.__next__()
+#             except AttributeError:
+#                 return self.generator.next()  #in python 2, iterators __next__ is named next
 
 
     def _callback(self, current, maximum):
