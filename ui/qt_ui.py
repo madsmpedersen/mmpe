@@ -168,8 +168,8 @@ class QtInputUI(InputUI):
         fn = gui.get_save_filename(title="title", filetype_filter="*.dit1;*dit2;;*.dat", file_dir=".", selected_filter="*.dat")
         if fn == "": return #cancel
         """
-        if file_dir is None:
-            file_dir = self._default_dir(str(file_dir))
+        file_dir = self._default_dir(str(file_dir))
+            
         filetype_filter = ";;".join((selected_filter, filetype_filter))
         r = str(QFileDialog.getSaveFileName(self.parent, title, file_dir, filetype_filter))
         if isinstance(r, tuple):
