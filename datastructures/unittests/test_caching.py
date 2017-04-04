@@ -43,7 +43,7 @@ class TestCacheProperty(unittest.TestCase):
 
     def testcache_property_test(self):
         e = Example()
-        self.assertAlmostEqual(e.prop("test")[1], 1, 2) # run test
+        self.assertGreaterEqual(e.prop("test")[1], 1) # run test
         self.assertAlmostEqual(e.prop("test")[1], 0, 2) # return cache result 
 
     def testcache_property_pool(self):
