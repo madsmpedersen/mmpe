@@ -40,9 +40,25 @@ class TextOutputUI(OutputUI):
         sys.__stdout__.flush()
             
     def write(self, txt):
-        if txt.strip()!="":
+        if txt!="":
             self.last_text = txt
         sys.__stdout__.write(txt)
+        
+    @property
+    def last_text(self):
+        try:
+            with open(".last_text.txt") as fid:
+                return fid.read()
+        except:
+            return ""
+        
+    @last_text.setter
+    def last_text(self, txt):
+        try:
+            with open(".last_text.txt",'w') as fid:
+                return fid.write(txt)
+        except:
+            pass
         
 
 class TextInputUI(InputUI):
@@ -71,28 +87,35 @@ class TextInputUI(InputUI):
 
 class TextStatusUI(StatusUI, TextOutputUI):
     
-
+    
     def progress_iterator(self, sequence, text="Working... Please wait", allow_cancel=True, always_refresh=False):
         global pct
         it = iter(list(sequence))
+        self.last_text = ""
         if it.__length_hint__() > 0:
             def init():
                 global pct
-                self.show_text("\n\n|0" + " " * 46 + "50%" + " " * 46 + "100%|")
+                sys.__stdout__.write("\n\n|0" + " " * 46 + "50%" + " " * 46 + "100%|\n")
                 pct = 0
-                self.show_text("|", end="")
+                sys.__stdout__.write("|")
 
-            self.show_text(text, flush=True)
+            sys.__stdout__.write(text)
+            sys.__stdout__.flush()
             #sys.__stdout__.flush()
             N = it.__length_hint__()
             init()
             for n, v in enumerate(it):
                 #if n % 100 == 99:
                 #    self.show_text("")
-                if (self.last_text != "." and n > 0) or (always_refresh and ((n + 1) / N * 100 > pct)):
+                
+                #if (self.last_text != "." and n > 0) or (always_refresh and ((n + 1) / N * 100 > pct)):
+                if self.last_text!="":
                     init()
+                    self.last_text = ""
+                
                 while ((n + 1) / N * 100 > pct):
-                    self.show_text(".", end="", flush=True)
+                    sys.__stdout__.write(".")
+                    sys.__stdout__.flush()
                     pct += 1
                 yield(v)
             self.show_text("|")
@@ -141,10 +164,5 @@ class TextUI(TextInputUI, TextStatusUI):
 
 
 if __name__ == "__main__":
-    def task(callback):
-        for i in range(100):
-            callback(i,100)
-            time.sleep(0.05)
-            
-    task (TextStatusUI().progress_callback())
+    pass
         

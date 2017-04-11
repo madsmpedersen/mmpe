@@ -2,3 +2,4 @@
 /io/tests/x.py
 /algorithms/string_matching_cython.pyd
 /algorithms/string_matching_cython.cp35-win_amd64.pyd
+/io/tests/tmp.h5
