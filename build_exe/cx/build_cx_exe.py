@@ -121,24 +121,24 @@ def write_setup(name, version, description="", author="", modules=[NUMPY], inclu
     if PYQT5 in modules:
         pass
         #include_files.append(os.path.dirname(sys.executable) + '/Lib\site-packages\qtpy\Qt/plugins\platforms\qwindows.dll')
-#    if SCIPY in modules:
-#        imports.append("import scipy.sparse.csgraph")
-#        includes.extend(["scipy.sparse.csgraph._validation",  #"scipy.sparse.linalg.dsolve.umfpack",
-#        "scipy.integrate.vode", "scipy.integrate._ode", "scipy.integrate.lsoda"])
-#        includes.append("scipy.special._ufuncs_cxx")  #py3_64
-#        try:
-#            from scipy.sparse.sparsetools import csr, csc, coo, dia, bsr, csgraph
-#
-#            for f in [csr._csr.__file__,
-#                      csc._csc.__file__,
-#                      coo._coo.__file__,
-#                      dia._dia.__file__,
-#                      bsr._bsr.__file__,
-#                      csgraph._csgraph.__file__]:
-#                shutil.copy(f, os.path.basename(f))
-#                include_files.append("%s" % os.path.basename(f))
-#        except ImportError:
-#            pass
+    if SCIPY in modules:
+        imports.append("import scipy.sparse.csgraph")
+        includes.extend(["scipy.sparse.csgraph._validation",  #"scipy.sparse.linalg.dsolve.umfpack",
+        "scipy.integrate.vode", "scipy.integrate._ode", "scipy.integrate.lsoda"])
+        includes.append("scipy.special._ufuncs_cxx")  #py3_64
+        try:
+            from scipy.sparse.sparsetools import csr, csc, coo, dia, bsr, csgraph
+
+            for f in [csr._csr.__file__,
+                      csc._csc.__file__,
+                      coo._coo.__file__,
+                      dia._dia.__file__,
+                      bsr._bsr.__file__,
+                      csgraph._csgraph.__file__]:
+                shutil.copy(f, os.path.basename(f))
+                include_files.append("%s" % os.path.basename(f))
+        except ImportError:
+            pass
     if DOCX in modules:
         include_files.append("mmpe/docx_document/docx-template_clean/")
         #include_files.append("functions/docx_document/inkscape/")
