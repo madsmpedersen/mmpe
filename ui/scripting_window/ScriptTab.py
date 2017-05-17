@@ -207,28 +207,28 @@ class ScriptTab(QWidget,):
             self.tabWidget.setTabText(index, "%s*" % self.title)
         else:
             self.tabWidget.setTabText(index, self.title)
-
+ 
     def reload(self):
         self.set_script(self.parent._load_script(self.filename))
         self.filemodified = os.path.getmtime(self.filename)
-
+ 
     def close(self):
         while self.dirty is True:  # While avoids data loss, in case save operation is aborted
             if self.filename == "":
                 text = "Save unsaved changes?"
             else:
                 text = "Save %s?" % self.filename
-
+ 
             ans = QMessageBox.question(self, 'Save', text, QMessageBox.Yes, QMessageBox.Cancel, QMessageBox.No)
-
+ 
             if ans == QMessageBox.Cancel:
                 return
             elif ans == QMessageBox.Yes:
-                self.parent.actionSave(checked=False)
+                self.parent.actionSave(False)
             elif ans == QMessageBox.No:
                 break
         self.tabWidget.removeTab(self.index())
-
+ 
     def _save(self,):
         f = open(self.filename, 'w')
         f.write(self.get_script())
