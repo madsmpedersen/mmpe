@@ -123,6 +123,7 @@ def write_setup(name, version, description="", author="", modules=[NUMPY], inclu
         #include_files.append(os.path.dirname(sys.executable) + '/Lib\site-packages\qtpy\Qt/plugins\platforms\qwindows.dll')
     if SCIPY in modules:
         imports.append("import scipy.sparse.csgraph")
+        imports.append('scipy.signal.psd')
         includes.extend(["scipy.sparse.csgraph._validation",  "scipy.sparse.linalg.dsolve.umfpack",
         "scipy.integrate.vode", "scipy.integrate._ode", "scipy.integrate.lsoda"])
         includes.append("scipy.special._ufuncs_cxx")  #py3_64

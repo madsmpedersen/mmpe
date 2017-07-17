@@ -248,19 +248,21 @@ class QtStatusUI(QtProgressInformation, StatusUI):
 
     def __init__(self, parent):
         QtProgressInformation.__init__(self, parent)
-        pass
+        StatusUI.__init__(self)
 
-    def start_wait(self):
+    def _start_wait(self):
         """Changes mouse icon to waitcursor"""
-        StatusUI.start_wait(self)
+        StatusUI._start_wait(self)
         QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
 
-    def end_wait(self):
+    def _end_wait(self):
         """Restores default mouse icon"""
-        StatusUI.end_wait(self)
+        StatusUI._end_wait(self)
         QApplication.restoreOverrideCursor()
-
-
+        
+    
+    
+        
 
 class QtUI(QtOutputUI, QtInputUI, QtStatusUI, UI):
     def __init__(self, parent=None):
@@ -279,8 +281,9 @@ if __name__ == "__main__":
             
         def mousePressEvent(self, *args, **kwargs):
             import time
-            for i in self.progress_iterator(range(10)):
-                time.sleep(0.1)
+            with self.wait:
+                for i in self.progress_iterator(range(10)):
+                    time.sleep(0.1)
             return QMainWindow.mousePressEvent(self, *args, **kwargs)           
                     
     app = QApplication(sys.argv)

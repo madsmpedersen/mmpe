@@ -87,7 +87,6 @@ class TextInputUI(InputUI):
 
 class TextStatusUI(StatusUI, TextOutputUI):
     
-    
     def progress_iterator(self, sequence, text="Working... Please wait", allow_cancel=True, always_refresh=False):
         global pct
         it = iter(list(sequence))
@@ -108,8 +107,8 @@ class TextStatusUI(StatusUI, TextOutputUI):
                 #if n % 100 == 99:
                 #    self.show_text("")
                 
-                #if (self.last_text != "." and n > 0) or (always_refresh and ((n + 1) / N * 100 > pct)):
-                if self.last_text!="":
+                if (self.last_text != "." and n > 0) or (always_refresh and ((n + 1) / N * 100 > pct)):
+                #if self.last_text!="":
                     init()
                     self.last_text = ""
                 
@@ -125,11 +124,11 @@ class TextStatusUI(StatusUI, TextOutputUI):
         print (text)
         return task(*args, **kwargs)
 
-    def start_wait(self):
+    def _start_wait(self):
         #print ("Working please wait")
         pass
 
-    def end_wait(self):
+    def _end_wait(self):
         #print ("finish")
         pass
 
@@ -160,6 +159,8 @@ class TextStatusUI(StatusUI, TextOutputUI):
         return ProgressCallBack(self, text, always_refresh)
                 
 class TextUI(TextInputUI, TextStatusUI):
+    def __init__(self):
+        TextStatusUI.__init__(self)
     pass
 
 

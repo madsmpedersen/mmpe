@@ -243,59 +243,59 @@ class ScriptingWindow(QtInputUI):
 
 
     def run_script(self, script):
-        self.gui.start_wait()
-        self.set_output("")
-        self.ui.labelLineNumber.setText("")
-        QApplication.processEvents()
-        sys.stdout = self
-        starttime = -time.time()
-        line_added=0
-        try:
-            self.output = []
+        with self.gui.wait_cursor():
+            self.set_output("")
+            self.ui.labelLineNumber.setText("")
+            QApplication.processEvents()
+            sys.stdout = self
+            starttime = -time.time()
+            line_added=0
             try:
-                self.scriptRunner.run(script)
-            except NameError as e:
-                s = str(e).split("'")
-                if len(s) == 3 and ((s[0] == "global name " and s[2] == " is not defined") or
-                                    (s[0] == "name " and s[2] == " is not defined")):  #python 3.5
-                    lines = script.split("\n")
-                     
-                    if "# auto global" in lines[0] and s[1] in lines[0]:
-                        pass
+                self.output = []
+                try:
+                    self.scriptRunner.run(script)
+                except NameError as e:
+                    s = str(e).split("'")
+                    if len(s) == 3 and ((s[0] == "global name " and s[2] == " is not defined") or
+                                        (s[0] == "name " and s[2] == " is not defined")):  #python 3.5
+                        lines = script.split("\n")
+                         
+                        if "# auto global" in lines[0] and s[1] in lines[0]:
+                            pass
+                        else:
+                            if self.gui.get_confirmation("Add global variable", "The variable '%s' seems to be missing in a scope. \nDo you want to add declare it as global?"%s[1])==True:
+                                if "# auto global" in lines[0] and s[1] not in lines[0].replace("# auto global","").replace("global",""):
+                                    lines[0] = lines[0].replace(" # auto global", ", %s # auto global" % s[1])
+                                else:
+                                    lines[0] = "global %s # auto global\n%s" % (s[1], lines[0])
+                                    line_added = 1
+                        script = "\n".join(lines)
+                        self.ui.tabWidget.currentWidget().set_script(script)
+                    raise
+                self.set_output("".join(self.output))
+                beep(1000, 50)
+            except (Warning, Exception) as inst:
+                traceback.print_exc(file=sys.stdout)
+                self.set_output("".join(self.output))
+                sys.stdout = sys.__stdout__
+                try:
+                    linenr = self.output[[self.output.index(l) for l in self.output if "File \"<string>\", line " in l][-1]]
+                    linenr = linenr[23:]
+                    if "," in linenr:
+                        linenr = int(linenr[:linenr.index(",")])
                     else:
-                        if self.gui.get_confirmation("Add global variable", "The variable '%s' seems to be missing in a scope. \nDo you want to add declare it as global?"%s[1])==True:
-                            if "# auto global" in lines[0] and s[1] not in lines[0].replace("# auto global","").replace("global",""):
-                                lines[0] = lines[0].replace(" # auto global", ", %s # auto global" % s[1])
-                            else:
-                                lines[0] = "global %s # auto global\n%s" % (s[1], lines[0])
-                                line_added = 1
-                    script = "\n".join(lines)
-                    self.ui.tabWidget.currentWidget().set_script(script)
-                raise
-            self.set_output("".join(self.output))
-            beep(1000, 50)
-        except (Warning, Exception) as inst:
-            traceback.print_exc(file=sys.stdout)
-            self.set_output("".join(self.output))
-            sys.stdout = sys.__stdout__
-            try:
-                linenr = self.output[[self.output.index(l) for l in self.output if "File \"<string>\", line " in l][-1]]
-                linenr = linenr[23:]
-                if "," in linenr:
-                    linenr = int(linenr[:linenr.index(",")])
-                else:
-                    linenr = int(linenr)
+                        linenr = int(linenr)
+    
+                    self.selectLine(linenr - 1+line_added)
+                except IndexError:
+                    pass
+                print ('-' * 60)
+                beep(500, 50)
+            finally:
+    
+                sys.stdout = sys.__stdout__
+            self.ui.labelLineNumber.setText("Script executed in %d seconds" % (time.time() + starttime))
 
-                self.selectLine(linenr - 1+line_added)
-            except IndexError:
-                pass
-            print ('-' * 60)
-            beep(500, 50)
-        finally:
-
-            sys.stdout = sys.__stdout__
-        self.ui.labelLineNumber.setText("Script executed in %d seconds" % (time.time() + starttime))
-        self.gui.end_wait()
 
     def write(self, s):
         try:

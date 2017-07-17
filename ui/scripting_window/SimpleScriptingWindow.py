@@ -143,40 +143,39 @@ class ScriptingWindow(QtInputUI):
         self.run_script(script)
 
     def run_script(self, script):
-        self.gui.start_wait()
-        self.set_output("")
-        self.ui.labelLineNumber.setText("")
-        QApplication.processEvents()
-        sys.stdout = self
-        starttime = -time.time()
-
-        try:
-
-            self.output = []
-            self.scriptRunner.run(script)
-            self.set_output("".join(self.output))
-        except (Warning, Exception) as inst:
-            traceback.print_exc(file=sys.stdout)
-            self.set_output("".join(self.output))
-            sys.stdout = sys.__stdout__
+        with self.gui.wait_cursor():
+            self.set_output("")
+            self.ui.labelLineNumber.setText("")
+            QApplication.processEvents()
+            sys.stdout = self
+            starttime = -time.time()
+    
             try:
-                linenr = self.output[[self.output.index(l) for l in self.output if "File \"<string>\", line " in l][-1]]
-                linenr = linenr[23:]
-                if "," in linenr:
-                    linenr = int(linenr[:linenr.index(",")])
-                else:
-                    linenr = int(linenr)
-
-                self.selectLine(linenr - 1)
-            except IndexError:
-                pass
-            print ('-' * 60)
-            beep(500, 50)
-        finally:
-
-            sys.stdout = sys.__stdout__
-        self.ui.labelLineNumber.setText("Script executed in %d seconds" % (time.time() + starttime))
-        self.gui.end_wait()
+    
+                self.output = []
+                self.scriptRunner.run(script)
+                self.set_output("".join(self.output))
+            except (Warning, Exception) as inst:
+                traceback.print_exc(file=sys.stdout)
+                self.set_output("".join(self.output))
+                sys.stdout = sys.__stdout__
+                try:
+                    linenr = self.output[[self.output.index(l) for l in self.output if "File \"<string>\", line " in l][-1]]
+                    linenr = linenr[23:]
+                    if "," in linenr:
+                        linenr = int(linenr[:linenr.index(",")])
+                    else:
+                        linenr = int(linenr)
+    
+                    self.selectLine(linenr - 1)
+                except IndexError:
+                    pass
+                print ('-' * 60)
+                beep(500, 50)
+            finally:
+    
+                sys.stdout = sys.__stdout__
+            self.ui.labelLineNumber.setText("Script executed in %d seconds" % (time.time() + starttime))
 
     def write(self, s):
         try:

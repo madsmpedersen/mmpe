@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 d = None
 d = dir()
 
@@ -49,16 +50,30 @@ class InputUI(object):
 
 class StatusUI(object):
     is_waiting = False
+    def __init__(self, parent=None):
+        self.waiting = False
+        
+    @contextmanager
+    def wait_cursor(self):
+        if self.waiting:
+            yield
+        else:
+            self.waiting = True
+            self._start_wait()
+            yield
+            self._end_wait()
+            self.waiting = False
+     
     def progress_iterator(self, sequence, text="Working... Please wait", allow_cancel=True):
         return sequence
 
     def exec_long_task(self, text, allow_cancel, task, *args, **kwargs):
         return task(*args, **kwargs)
 
-    def start_wait(self):
+    def _start_wait(self):
         self.is_waiting = True
 
-    def end_wait(self):
+    def _end_wait(self):
         self.is_waiting = False
 
     def progress_callback(self):
