@@ -45,7 +45,7 @@ class ScriptingWindow(QtInputUI):
 #===============================================================================
 """
 
-    autosave_filename = os.path.expanduser('~/.pdap/autosave.py')
+    
     autosave_warning_shown = False
     handle_focus = False
     anchor = None
@@ -57,6 +57,7 @@ class ScriptingWindow(QtInputUI):
         self.model = model
         self.gui = gui
         self.appfuncs_path = appfuncs_path
+        self.autosave_filename = self.load_setting('autosave_filename', os.path.expanduser('~/.pdap/autosave.py'))
         make_dirs(self.autosave_filename)
         self.load_autosave()
         self.ui.splitter.setSizes([400, 200])
@@ -87,6 +88,13 @@ class ScriptingWindow(QtInputUI):
 
             self.ui.webView.setUrl(QUrl(self.doc_path + "index.html"))
 
+
+    def _actionSet_autosave_file(self):
+        fn = self.get_save_filename('Save as...', 'autosave.py;;*.py', self.autosave_filename)
+        if fn == "": return #Cancel
+        self.autosave_filename = fn
+        self.save_setting('autosave_filename', self.autosave_filename)
+        self.autosave()
 
     def tab_changed(self, index):
         pass
@@ -275,7 +283,8 @@ class ScriptingWindow(QtInputUI):
                 self.set_output("".join(self.output))
                 beep(1000, 50)
             except (Warning, Exception) as inst:
-                traceback.print_exc(file=sys.stdout)
+                limit = ["exec(script_code, globals(), locals())" in traceback.format_exc(limit=-i) for i in range(100)].index(True)-1
+                traceback.print_exc(file=sys.stdout, limit=-limit)
                 self.set_output("".join(self.output))
                 sys.stdout = sys.__stdout__
                 try:
@@ -488,6 +497,12 @@ class ScriptingMainWindow(QtMainWindowLoader, ScriptingWindow, QtUI):
     def closeEvent(self, *args, **kwargs):
         self.close()
         return QtMainWindowLoader.closeEvent(self, *args, **kwargs)
+
+
+
+    def _actionAutosave_file(self):
+        #Auto implemented action handler
+        raise NotImplementedError
 
 
 

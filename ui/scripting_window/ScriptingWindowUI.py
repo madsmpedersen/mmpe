@@ -38,6 +38,8 @@ class Ui_Form(object):
         self.menuFile.setObjectName(_fromUtf8("menuFile"))
         self.menuRun = QtGui.QMenu(self.menuBar)
         self.menuRun.setObjectName(_fromUtf8("menuRun"))
+        self.menuSettings = QtGui.QMenu(self.menuBar)
+        self.menuSettings.setObjectName(_fromUtf8("menuSettings"))
         self.gridLayout_2.addWidget(self.menuBar, 0, 0, 1, 1)
         self.splitter_2 = QtGui.QSplitter(Form)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
@@ -107,6 +109,8 @@ class Ui_Form(object):
         self.actionExportPlugin.setObjectName(_fromUtf8("actionExportPlugin"))
         self.actionOpen = QtGui.QAction(Form)
         self.actionOpen.setObjectName(_fromUtf8("actionOpen"))
+        self.actionSet_autosave_file = QtGui.QAction(Form)
+        self.actionSet_autosave_file.setObjectName(_fromUtf8("actionSet_autosave_file"))
         self.menuFile.addAction(self.actionNew)
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addAction(self.actionSaveAs)
@@ -115,8 +119,10 @@ class Ui_Form(object):
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionExportPlugin)
         self.menuRun.addAction(self.actionRunScript)
+        self.menuSettings.addAction(self.actionSet_autosave_file)
         self.menuBar.addAction(self.menuFile.menuAction())
         self.menuBar.addAction(self.menuRun.menuAction())
+        self.menuBar.addAction(self.menuSettings.menuAction())
 
         self.retranslateUi(Form)
         self.tabWidget.setCurrentIndex(-1)
@@ -126,6 +132,7 @@ class Ui_Form(object):
         Form.setWindowTitle(_translate("Form", "Scripting", None))
         self.menuFile.setTitle(_translate("Form", "File", None))
         self.menuRun.setTitle(_translate("Form", "Run", None))
+        self.menuSettings.setTitle(_translate("Form", "Settings", None))
         self.label_2.setText(_translate("Form", "Output", None))
         self.textEditOutput.setHtml(_translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -144,6 +151,7 @@ class Ui_Form(object):
         self.actionOpen.setText(_translate("Form", "Open", None))
         self.actionOpen.setToolTip(_translate("Form", "Open script", None))
         self.actionOpen.setShortcut(_translate("Form", "Ctrl+O", None))
+        self.actionSet_autosave_file.setText(_translate("Form", "Set autosave file ...", None))
 
 from PyQt4 import QtWebKit
 

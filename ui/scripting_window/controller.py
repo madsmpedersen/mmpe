@@ -44,12 +44,12 @@ class ScriptingWindowController(object):
 
         self.application_name = "ScriptingFunctionWindow"
         self.load_script_functions(self.gui, self.model, "mmpe/ui/scripting_window/appfuncs")
-        self.load_script_functions(self.gui, self.model, "appfuncs")
+        #self.load_script_functions(self.gui, self.model, "appfuncs")
         self.scriptRunner = ScriptRunner(self, self.gui, None)
         self.gui.start()
 
     def load_script_functions(self, gui, model, root_path):
-        if not hasattr(self, 'appFuncs'):
+        if not hasattr(self, 'appfuncs'):
             self.appFuncs = []
         for func_cls in script_function_class_list(root_path):
             func_obj = func_cls(self, gui, model)

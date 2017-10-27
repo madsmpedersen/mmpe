@@ -46,8 +46,15 @@
       </property>
       <addaction name="actionRunScript"/>
      </widget>
+     <widget class="QMenu" name="menuSettings">
+      <property name="title">
+       <string>Settings</string>
+      </property>
+      <addaction name="actionSet_autosave_file"/>
+     </widget>
      <addaction name="menuFile"/>
      <addaction name="menuRun"/>
+     <addaction name="menuSettings"/>
     </widget>
    </item>
    <item row="1" column="0">
@@ -203,6 +210,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionSet_autosave_file">
+   <property name="text">
+    <string>Set autosave file ...</string>
    </property>
   </action>
  </widget>

@@ -171,7 +171,9 @@ class QtInputUI(InputUI):
         file_dir = self._default_dir(str(file_dir))
             
         filetype_filter = ";;".join((selected_filter, filetype_filter))
+        cwd = os.getcwd()
         r = str(QFileDialog.getSaveFileName(self.parent, title, file_dir, filetype_filter))
+        os.chdir(cwd)
         if isinstance(r, tuple):
             r = r[0]
         r = r.replace('\\', '/')
