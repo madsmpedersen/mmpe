@@ -107,10 +107,12 @@ class TextStatusUI(StatusUI, TextOutputUI):
                 #if n % 100 == 99:
                 #    self.show_text("")
                 
-                if (self.last_text != "." and n > 0) or (always_refresh and ((n + 1) / N * 100 > pct)):
+                if (self.last_text != "." and n > 0) or (always_refresh and int((n + 1) / N * 100) > pct+1):
+                    #print ("#"+self.last_text+"#", int((n + 1) / N * 100), pct)
+                    
                 #if self.last_text!="":
                     init()
-                    self.last_text = ""
+                    self.last_text = "."
                 
                 while ((n + 1) / N * 100 > pct):
                     sys.__stdout__.write(".")

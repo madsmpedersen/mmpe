@@ -283,8 +283,12 @@ class ScriptingWindow(QtInputUI):
                 self.set_output("".join(self.output))
                 beep(1000, 50)
             except (Warning, Exception) as inst:
-                limit = ["exec(script_code, globals(), locals())" in traceback.format_exc(limit=-i) for i in range(100)].index(True)-1
-                traceback.print_exc(file=sys.stdout, limit=-limit)
+                try:
+                    limit = -["exec(script_code, globals(), locals())" in traceback.format_exc(limit=-i) for i in range(100)].index(True)-1
+                except:
+                    limit=None
+                
+                traceback.print_exc(file=sys.stdout, limit=limit)
                 self.set_output("".join(self.output))
                 sys.stdout = sys.__stdout__
                 try:
