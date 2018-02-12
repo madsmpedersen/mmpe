@@ -24,6 +24,10 @@ class Test(unittest.TestCase):
         unittest.TestCase.setUp(self)
         self.autoupdater = AutoUpdater('http://tools.windenergy.dtu.dk/test_application/downloads/index.htm', tmp_dir, "test_application")
     
+    def tearDown(self):
+        unittest.TestCase.tearDown(self)
+        remove_tmp_dir()
+    
     def testAutoupdater(self):
         self.assertTrue((0,2,0) in self.autoupdater.versions)
         info = self.autoupdater.info((0,2,0))
